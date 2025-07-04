@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Orero High School</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Neumorphism Styles */
+        .neu-card {
+            background: #f0f0f3;
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+            border-radius: 20px;
+        }
+        
+        .neu-button {
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .neu-button:hover {
+            box-shadow: 
+                10px 10px 30px #d1d1d4,
+                -10px -10px 30px #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        /* Custom Kenyan School Colors */
+        .primary-blue { background: #1e40af; }
+        .secondary-green { background: #059669; }
+        .accent-gold { background: #d97706; }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation sticky */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Hero gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e40af 0%, #059669 50%, #d97706 100%);
+        }
+        
+        /* Image placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e5e7eb;
+            border-top: 5px solid #1e40af;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .neu-card {
+                box-shadow: 10px 10px 30px #d1d1d4, -10px -10px 30px #ffffff;
+            }
+        }
+        
+        /* Timeline styles */
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #1e40af, #059669, #d97706);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: #1e40af;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #1e40af;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="text-center">
+            <div class="spinner mb-4"></div>
+            <h3 class="text-xl font-semibold text-blue-600">Loading About Orero High School...</h3>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky-nav shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Orero High School</h1>
+                        <p class="text-sm text-gray-600">Excellence in Education</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Home</a>
+                    <a href="about.html" class="nav-link text-blue-600 font-semibold">About</a>
+                    <a href="academics.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Academics</a>
+                    <a href="staff.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Staff</a>
+                    <a href="admissions.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Admissions</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Gallery</a>
+                    <a href="news.html" class="nav-link text-gray-700 hover:text-blue-600 transition">News</a>
+                    <a href="contact.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                
+                <button id="mobileMenu" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuContent" class="hidden md:hidden mt-4 space-y-2">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+                <a href="about.html" class="block py-2 text-blue-600 font-semibold">About</a>
+                <a href="academics.html" class="block py-2 text-gray-700 hover:text-blue-600">Academics</a>
+                <a href="staff.html" class="block py-2 text-gray-700 hover:text-blue-600">Staff</a>
+                <a href="admissions.html" class="block py-2 text-gray-700 hover:text-blue-600">Admissions</a>
+                <a href="gallery.html" class="block py-2 text-gray-700 hover:text-blue-600">Gallery</a>
+                <a href="news.html" class="block py-2 text-gray-700 hover:text-blue-600">News</a>
+                <a href="contact.html" class="block py-2 text-gray-700 hover:text-blue-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Background Image -->
+<section 
+  class="text-white py-20 bg-cover bg-center bg-no-repeat relative"
+  style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/gate.jpg');"
+>
+  <div class="container mx-auto px-4 text-center relative z-10">
+    <div data-aos="fade-up" data-aos-duration="1000">
+      <div class="w-24 h-24 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-lg">
+        <i class="fas fa-school text-blue-600 text-3xl"></i>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold mb-4">About Our School</h1>
+      <p class="text-xl md:text-2xl mb-2 opacity-90">Nurturing Excellence Since 1985</p>
+      <p class="text-lg mb-8 opacity-80">Discover our rich history, values, and commitment to educational excellence</p>
+    </div>
+  </div>
+</section>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white py-4 border-b">
+        <div class="container mx-auto px-4">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                            <span class="text-blue-600 font-semibold">About Us</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-20">
+        <div class="container mx-auto px-4">
+            <!-- School Introduction -->
+<section class="mb-20">
+  <div class="text-center mb-16" data-aos="fade-up">
+    <h2 class="text-4xl font-bold text-gray-800 mb-4">About Orero High School</h2>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Since its founding in 1985, Orero High School has been a pillar of academic excellence in Homa Bay County — nurturing disciplined, capable, and purpose-driven leaders for Kenya and beyond.
+    </p>
+  </div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+  <!-- Image with fullscreen click, grayscale hover, and caption -->
+  <div data-aos="fade-right" class="space-y-4">
+    <a 
+      href="/images/hero.jpg" 
+      target="_blank" 
+      title="Click to view full screen"
+      class="block transition-transform duration-300 transform hover:scale-105"
+    >
+      <img
+        src="/images/hero.jpg"
+        alt="Aerial view of Orero High School campus"
+        loading="lazy"
+        class="h-80 w-full object-cover rounded-lg shadow-md grayscale hover:grayscale-0 transition duration-500"
+      >
+    </a>
+    <p class="text-center text-sm text-gray-500 italic">Aerial View of Orero High School</p>
+  </div>
+
+  <!-- Our Story Text -->
+  <div data-aos="fade-left">
+    <h3 class="text-3xl font-bold text-gray-800 mb-6">Our Story</h3>
+    <p class="text-gray-600 mb-4">
+      Orero High School was established in Rangwe Constituency, Homa Bay County in 1985. What began as a small rural boys’ school has since transformed into one of Kenya’s most consistent performers in academics and co-curricular achievements.
+    </p>
+    <p class="text-gray-600 mb-6">
+      Through visionary leadership, unwavering discipline, and a culture of hard work, the school has consistently produced top KCSE candidates, university-bound graduates, and nationally recognized alumni.
+    </p>
+
+    <div class="space-y-4">
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-map-marker-alt text-blue-600 animate-bounce-slow"></i>
+        <span class="text-gray-700">Located in Rangwe, Homa Bay County</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-calendar-alt text-green-600 animate-bounce-slow"></i>
+        <span class="text-gray-700">Established in 1985 (40+ years of impact)</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-users text-orange-600 animate-bounce-slow"></i>
+        <span class="text-gray-700">2,000+ students enrolled</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-award text-purple-600 animate-bounce-slow"></i>
+        <span class="text-gray-700">Ranked among Kenya’s top-performing schools</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+            <!-- Vision, Mission, Motto -->
+<section class="mb-20">
+    <div class="text-center mb-12" data-aos="fade-up">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Foundation</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">The core values and principles that guide everything we do at Orero High School</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="neu-card p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-eye text-white text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
+            <p class="text-gray-600 leading-relaxed">
+                To be a nationally renowned center of academic excellence that nurtures responsible, self-driven, and globally competitive learners equipped with knowledge, values, and innovation.
+            </p>
+        </div>
+        
+        <div class="neu-card p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-bullseye text-white text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
+            <p class="text-gray-600 leading-relaxed">
+                To provide holistic and inclusive education that promotes academic excellence, discipline, character development, and talent growth, preparing students for higher learning and responsible citizenship.
+            </p>
+        </div>
+        
+        <div class="neu-card p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-quote-left text-white text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Motto</h3>
+            <div class="mb-4">
+                <p class="text-3xl font-bold text-orange-600 mb-2">"Education Empowers"</p>
+                <p class="text-gray-600 leading-relaxed">
+                    We believe that true excellence is rooted in deep knowledge, discipline, and integrity — driving every learner to exceed expectations and shape the world with confidence.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Anthems Section -->
+<section id="anthems" class="py-16 bg-gray-100" data-aos="fade-up">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Anthems</h2>
+    <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+      Words that unite, inspire, and echo the pride of our nation, region, and school.
+    </p>
+
+    <!-- Anthem Blocks -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+      
+      <!-- Kenya National Anthem -->
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-2xl font-bold text-blue-800 mb-4">Kenya National Anthem</h3>
+        <p class="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+O God of all creation,
+Bless this our land and nation.
+Justice be our shield and defender,
+May we dwell in unity,
+Peace and liberty,
+Plenty be found within our borders.
+
+Let one and all arise,
+With hearts both strong and true.
+Service be our earnest endeavour,
+And our homeland of Kenya,
+Heritage of splendour,
+Firm may we stand to defend.
+        </p>
+      </div>
+
+      <!-- East African Anthem -->
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-2xl font-bold text-green-800 mb-4">East African Community Anthem</h3>
+        <p class="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+Ee Mungu twaomba ulinde
+Jumuiya Afrika Mashariki
+Tuwezeshe kuishi kwa amani
+Tutimize na malengo yetu.
+
+Jumuiya Yetu sote tuilinde
+Tuwe tayari kuilinda
+Kiapo chetu kwa Jumuiya
+Tuilinde Jumuiya.
+        </p>
+      </div>
+
+     <!-- Orero High School Anthem -->
+<div class="bg-white p-6 rounded-xl shadow">
+  <h3 class="text-2xl font-bold text-purple-800 mb-4">Orero School Anthem</h3>
+  <p class="text-sm text-gray-700 leading-relaxed whitespace-pre-line italic">
+Thoughts and deeds, shall abide with task  
+Keep candle bright, and be our emblem  
+Sieve the trash, Dear Lord we ask  
+For Education empowers,  
+
+In pride we all ride, with rules abide  
+When we combine, all members together in school Orero
+We aim at nothing but the Best!
+  </p>
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+         <!-- School History Timeline -->
+<section class="mb-20" data-aos="fade-up">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Journey Through Time</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Key milestones in our four-decade journey of educational excellence</p>
+    </div>
+
+    <div class="timeline max-w-4xl mx-auto">
+        <!-- 1985 -->
+        <div class="timeline-item">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="md:text-right" data-aos="fade-right">
+                    <div class="neu-card p-6">
+                        <h4 class="text-xl font-bold text-blue-600 mb-2">1985 - Foundation</h4>
+                        <p class="text-gray-600">Orero High School was founded in Rangwe, Homa Bay County with the vision of shaping disciplined, academically excellent young men from across Kenya.</p>
+                    </div>
+                </div>
+                <div class="hidden md:block"></div>
+            </div>
+        </div>
+
+        <!-- 1992 -->
+        <div class="timeline-item">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="hidden md:block"></div>
+                <div data-aos="fade-left">
+                    <div class="neu-card p-6">
+                        <h4 class="text-xl font-bold text-green-600 mb-2">1992 - First KCSE Cohort</h4>
+                        <p class="text-gray-600">The first KCSE class graduates with impressive results, earning praise for discipline, academic strength, and university entry rates.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2000 -->
+        <div class="timeline-item">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="md:text-right" data-aos="fade-right">
+                    <div class="neu-card p-6">
+                        <h4 class="text-xl font-bold text-purple-600 mb-2">2000 - Facilities Upgrade</h4>
+                        <p class="text-gray-600">Classrooms, science labs, dormitories, and the administration block expanded to support rapid growth in student population.</p>
+                    </div>
+                </div>
+                <div class="hidden md:block"></div>
+            </div>
+        </div>
+
+        <!-- 2018 -->
+        <div class="timeline-item">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="hidden md:block"></div>
+                <div data-aos="fade-left">
+                    <div class="neu-card p-6">
+                        <h4 class="text-xl font-bold text-yellow-600 mb-2">2018 - National Spotlight</h4>
+                        <p class="text-gray-600">With a KCSE mean score of 9.41 and 100% university transition, Orero rose to national acclaim as one of Kenya’s best-performing public schools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2021 -->
+        <div class="timeline-item">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="md:text-right" data-aos="fade-right">
+                    <div class="neu-card p-6">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-2">2021 - Regional Dominance</h4>
+                        <p class="text-gray-600">Ranked 1st in Nyanza and 14th nationally, Orero solidified its place among Kenya’s elite high schools.</p>
+                    </div>
+                </div>
+                <div class="hidden md:block"></div>
+            </div>
+        </div>
+
+        <!-- 2024 -->
+        <div class="timeline-item">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="hidden md:block"></div>
+                <div data-aos="fade-left">
+                    <div class="neu-card p-6">
+                        <h4 class="text-xl font-bold text-red-600 mb-2">2024 - Record Breaking</h4>
+                        <p class="text-gray-600">665 candidates sat the KCSE, achieving a historic mean score of <strong>9.42</strong> with a <strong>100% university qualification rate</strong>. Orero’s legacy continues to grow stronger.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <!-- Principal's Message -->
+            <section class="mb-20">
+                <div class="neu-card p-8 lg:p-12" data-aos="fade-up">
+                    <div class="text-center mb-8">
+                        <h2 class="text-4xl font-bold text-gray-800 mb-4">Leadership Message</h2>
+                        <p class="text-xl text-gray-600">A word from our Principal</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                        <div class="lg:col-span-1 text-center">
+                            <div class="img-placeholder h-80 rounded-lg mb-6 overflow-hidden">
+    <img src="/images/staff/bula portrait.jpg" alt="Orero High School" class="w-full h-full object-cover rounded-lg">
+</div>Principal Mr. Dickens Bula</div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-2">Mr. Dickens Bula</h3>
+                                <p class="text-blue-600 font-semibold text-lg mb-4">Principal</p>
+                                <div class="text-gray-600 space-y-1">
+                                    <p><strong>Experience:</strong> 18 years in education</p>
+                                    <p><strong>Qualifications:</strong> M.Ed Educational Leadership</p>
+                                    <p><strong>Specialization:</strong> Mathematics & Educational Management</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-2">
+                            <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                                <h4 class="text-2xl font-bold text-blue-800 mb-4">Welcome to Orero High School</h4>
+                            </div>
+                            
+                            <div class="text-gray-600 space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    "Welcome to Orero High School, where excellence meets opportunity. As the Principal of this esteemed institution, I am proud to lead a community dedicated to nurturing young minds and shaping future leaders."
+                                </p>
+                                <p>
+                                    "Our school stands as a testament to the power of quality education, where every student is encouraged to reach their full potential academically, socially, and morally. We believe that education is not just about passing examinations, but about developing critical thinking, creativity, and character."
+                                </p>
+                                <p>
+                                    "At Orero High School, we are committed to providing a safe, inclusive, and stimulating learning environment where every student can thrive. Our dedicated team of educators works tirelessly to ensure that each child receives personalized attention and support."
+                                </p>
+                                <p>
+                                    "We embrace innovation while honoring tradition, preparing our students not just for examinations, but for life itself. Our comprehensive curriculum, combined with diverse co-curricular activities, ensures that our graduates are well-rounded individuals ready to contribute meaningfully to society."
+                                </p>
+                                <p class="font-semibold text-blue-600 text-xl">
+                                    "Together, we continue to uphold our motto: 'Education Empowers' - a commitment that has guided us for nearly four decades and will continue to inspire future generations."
+                                </p>
+                            </div>
+                            
+                            <div class="mt-8 p-4 bg-gray-100 rounded-lg">
+                                <p class="text-gray-700 font-medium">
+                                    <i class="fas fa-quote-left text-blue-600 mr-2"></i>
+                                    "Education is the most powerful weapon which you can use to change the world. At Orero High School, we arm our students with knowledge, values, and skills to make a positive difference."
+                                    <i class="fas fa-quote-right text-blue-600 ml-2"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Core Values -->
+            <section class="mb-20" data-aos="fade-up">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Core Values</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">The fundamental principles that shape our educational approach and school culture</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="neu-card p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-star text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">Excellence</h4>
+                        <p class="text-gray-600 text-sm">Striving for the highest standards in academics, character, and service to others.</p>
+                    </div>
+                    
+                    <div class="neu-card p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">Integrity</h4>
+                        <p class="text-gray-600 text-sm">Upholding honesty, transparency, and moral uprightness in all our endeavors.</p>
+                    </div>
+                    
+                    <div class="neu-card p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">Unity</h4>
+                        <p class="text-gray-600 text-sm">Celebrating diversity while building a strong, inclusive school community.</p>
+                    </div>
+                    
+                    <div class="neu-card p-6 text-center" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">Innovation</h4>
+                        <p class="text-gray-600 text-sm">Embracing creativity and new approaches to teaching and learning.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- School Statistics -->
+<section class="mb-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Impact in Numbers</h2>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Four decades of academic excellence, discipline, and holistic growth — measured by real results.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Total Graduates -->
+    <div class="neu-card p-8 text-center">
+      <div class="text-4xl font-bold text-blue-600 mb-2" data-target="10000">0</div>
+      <p class="text-gray-600 font-semibold">Total Graduates</p>
+      <p class="text-sm text-gray-500 mt-2">Since 1985</p>
+    </div>
+
+    <!-- Teaching Staff -->
+    <div class="neu-card p-8 text-center">
+      <div class="text-4xl font-bold text-green-600 mb-2" data-target="70">0</div>
+      <p class="text-gray-600 font-semibold">Teaching Staff</p>
+      <p class="text-sm text-gray-500 mt-2">Dedicated Educators</p>
+    </div>
+
+    <!-- Current Student Body -->
+    <div class="neu-card p-8 text-center">
+      <div class="text-4xl font-bold text-purple-600 mb-2" data-target="2000">0</div>
+      <p class="text-gray-600 font-semibold">Current Students</p>
+      <p class="text-sm text-gray-500 mt-2">Across 4 Forms</p>
+    </div>
+
+    <!-- Years of Excellence -->
+    <div class="neu-card p-8 text-center">
+      <div class="text-4xl font-bold text-orange-600 mb-2" data-target="40">0</div>
+      <p class="text-gray-600 font-semibold">Years of Excellence</p>
+      <p class="text-sm text-gray-500 mt-2">1985 - 2025</p>
+    </div>
+  </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- School Info -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Orero High School</h3>
+                            <p class="text-sm opacity-80">Excellence in Education</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Nurturing future leaders through quality education, character development, and holistic learning experiences since 1985.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-white">About Us</a></li>
+                        <li><a href="academics.html" class="text-gray-300 hover:text-white">Academics</a></li>
+                        <li><a href="staff.html" class="text-gray-300 hover:text-white">Our Staff</a></li>
+                        <li><a href="admissions.html" class="text-gray-300 hover:text-white">Admissions</a></li>
+                        <li><a href="gallery.html" class="text-gray-300 hover:text-white">Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Academics -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">About</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Our History</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Vision & Mission</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">School Leadership</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Core Values</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">School Motto</a></li>
+                    </ul>
+                </div>
+                
+               <!-- Contact Info -->
+<div>
+  <h4 class="text-lg font-bold text-white mb-4">Contact Information</h4>
+  <div class="space-y-3 text-gray-300 text-sm">
+
+    <div class="flex items-center">
+      <i class="fas fa-map-marker-alt text-blue-400 mr-3 animate-bounce-slow"></i>
+      <span>Orero High School, Rangwe Constituency<br>Homa Bay County, Kenya</span>
+    </div>
+
+    <div class="flex items-center">
+      <i class="fas fa-phone-alt text-blue-400 mr-3"></i>
+      <span>+254 722 288 230</span>
+    </div>
+
+    <div class="flex items-center">
+      <i class="fas fa-envelope text-blue-400 mr-3"></i>
+      <span>oreroschool@gmail.com</span>
+    </div>
+
+    <div class="flex items-center">
+      <i class="fas fa-clock text-blue-400 mr-3"></i>
+      <span>Mon - Fri: 8:00 AM – 5:00 PM</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bottom Footer -->
+<div class="border-t border-gray-700 mt-12 pt-8 text-center">
+  <div class="flex flex-col md:flex-row justify-between items-center">
+    <p class="text-gray-300 mb-4 md:mb-0">
+      &copy; 2024 Orero High School. All rights reserved.
+    </p>
+  </div>
+  <div class="mt-4 text-gray-400 text-sm italic">
+    Motto: "Education Empowers" &nbsp; | &nbsp; Established 1968
+  </div>
+</div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hidden hover:bg-blue-700 transition z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- AOS Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true
+        });
+
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1500);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuContent = document.getElementById('mobileMenuContent');
+        
+        mobileMenu.addEventListener('click', function() {
+            mobileMenuContent.classList.toggle('hidden');
+        });
+
+        // Counter Animation with "+" and commas
+function animateCounters() {
+    const counters = document.querySelectorAll('[data-target]');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100;
+        let current = 0;
+
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.floor(current).toLocaleString() + "+";
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.textContent = target.toLocaleString() + "+";
+            }
+        };
+
+        updateCounter();
+    });
+}
+
+        // Trigger counter animation when any counter section is visible
+const counters = document.querySelectorAll('[data-target]');
+if (counters.length > 0) {
+    const statsSection = counters[0].closest('section');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    if (statsSection) observer.observe(statsSection);
+}
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

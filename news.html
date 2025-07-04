@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Updates - Orero High School</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Neumorphism Styles */
+        .neu-card {
+            background: #f0f0f3;
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+            border-radius: 20px;
+        }
+        
+        .neu-inset {
+            background: #f0f0f3;
+            box-shadow: 
+                inset 20px 20px 60px #d1d1d4,
+                inset -20px -20px 60px #ffffff;
+            border-radius: 20px;
+        }
+        
+        .neu-button {
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .neu-button:hover {
+            box-shadow: 
+                10px 10px 30px #d1d1d4,
+                -10px -10px 30px #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        /* Custom Kenyan School Colors */
+        .primary-blue { background: #1e40af; }
+        .secondary-green { background: #059669; }
+        .accent-gold { background: #d97706; }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation sticky */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Image placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        /* News card hover effects */
+        .news-card {
+            transition: all 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                25px 25px 70px #d1d1d4,
+                -25px -25px 70px #ffffff;
+        }
+        
+        /* Category filter styles */
+        .category-filter.active {
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            color: white;
+            box-shadow: 
+                inset 5px 5px 15px #1e3a8a,
+                inset -5px -5px 15px #60a5fa;
+        }
+        
+        /* Search box styles */
+        .search-box {
+            background: #f0f0f3;
+            box-shadow: 
+                inset 10px 10px 30px #d1d1d4,
+                inset -10px -10px 30px #ffffff;
+        }
+        
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e5e7eb;
+            border-top: 5px solid #1e40af;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .neu-card {
+                box-shadow: 10px 10px 30px #d1d1d4, -10px -10px 30px #ffffff;
+            }
+        }
+        
+        /* Article modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #f0f0f3;
+            border-radius: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+        }
+        
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 10001;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="text-center">
+            <div class="spinner mb-4"></div>
+            <h3 class="text-xl font-semibold text-blue-600">Loading News & Updates...</h3>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span id="notificationText">News updated successfully!</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky-nav shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Orero High School</h1>
+                        <p class="text-sm text-gray-600">Excellence in Education</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="academics.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Academics</a>
+                    <a href="staff.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Staff</a>
+                    <a href="admissions.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Admissions</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Gallery</a>
+                    <a href="news.html" class="nav-link text-blue-600 font-semibold transition">News</a>
+                    <a href="contact.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                
+                <button id="mobileMenu" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuContent" class="hidden md:hidden mt-4 space-y-2">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+                <a href="about.html" class="block py-2 text-gray-700 hover:text-blue-600">About</a>
+                <a href="academics.html" class="block py-2 text-gray-700 hover:text-blue-600">Academics</a>
+                <a href="staff.html" class="block py-2 text-gray-700 hover:text-blue-600">Staff</a>
+                <a href="admissions.html" class="block py-2 text-gray-700 hover:text-blue-600">Admissions</a>
+                <a href="gallery.html" class="block py-2 text-gray-700 hover:text-blue-600">Gallery</a>
+                <a href="news.html" class="block py-2 text-blue-600 font-semibold">News</a>
+                <a href="contact.html" class="block py-2 text-gray-700 hover:text-blue-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen bg-cover bg-center bg-no-repeat text-white" style="background-image: url('/images/aerial/night\ time.jpg');">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div> <!-- Optional dark overlay -->
+        
+        <div class="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20 min-h-screen">
+            <div data-aos="fade-up" data-aos-duration="1000">
+                
+                <!-- Icon Circle -->
+                <div class="w-24 h-24 mx-auto mb-6 bg-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-newspaper text-blue-600 text-3xl"></i>
+                </div>
+                
+                <!-- Hero Text -->
+                <h1 class="text-5xl md:text-6xl font-bold mb-4">Latest News & Updates</h1>
+                <p class="text-xl md:text-2xl mb-2 opacity-90">Stay Connected with Orero High School</p>
+                <p class="text-lg mb-8 opacity-80">Achievements • Events • Announcements • Success Stories</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <!-- Search and Filter Bar -->
+            <div class="neu-card p-6 mb-12" data-aos="fade-up">
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="flex-1 w-full md:w-auto">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Search news articles..."
+                                    class="search-box w-full px-4 py-3 pl-12 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold active" data-category="all">All</button>
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold" data-category="academic">Academic</button>
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold" data-category="achievement">Achievement</button>
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold" data-category="infrastructure">Infrastructure</button>
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold" data-category="sports">Sports</button>
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold" data-category="alumni">Alumni</button>
+                        <button class="category-filter neu-button px-4 py-2 text-blue-600 font-semibold" data-category="event">Event</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured News -->
+            <div class="mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Featured News</h2>
+                <div class="neu-card p-8 lg:p-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="text-center"><img src="/images/news/result24.jpg" alt="KCSE Results Excellence"  class="max-h-[500px] w-auto mx-auto rounded-lg object-contain"></div>
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold">Featured</span>
+                                <span class="text-gray-500 text-sm ml-auto">January 9, 2024</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-gray-800 mb-4">Orero High School Achieves Outstanding KCSE Results</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Our students have once again demonstrated excellence with a mean score of 9.4235 in the 2024 KCSE examinations. 
+                                This remarkable achievement places us among the top 10% of schools in the county, with 100% of our graduates
+                                qualifying for university admission. The results reflect our unwavering commitment to academic excellence
+                                and the dedication of our teaching staff.
+                            </p>
+                            <button class="neu-button px-6 py-3 text-blue-600 font-semibold" onclick="openArticle('featured')">
+                                <i class="fas fa-arrow-right mr-2"></i>Read Full Story
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center" data-aos="fade-up">Recent Updates</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="newsGrid">
+                    
+                    <!-- Science Fair News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="achievement" data-aos="fade-up" data-aos-delay="100">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Science Fair Winners" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">Achievement</span>
+                                <span class="text-gray-500 text-sm ml-auto">March 10, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Students Win Regional Science Fair</h3>
+                            <p class="text-gray-600 mb-4">Form 3 students Mary Achieng and John Kiprotich took first place at the Western Kenya Regional Science Fair with their innovative water purification project.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('science-fair')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- New Laboratory News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="infrastructure" data-aos="fade-up" data-aos-delay="200">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Computer Laboratory" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">Infrastructure</span>
+                                <span class="text-gray-500 text-sm ml-auto">March 5, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">New Computer Laboratory Officially Opened</h3>
+                            <p class="text-gray-600 mb-4">The school inaugurated a state-of-the-art computer laboratory with 40 modern workstations to enhance digital literacy among students.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('computer-lab')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- Sports Victory News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="sports" data-aos="fade-up" data-aos-delay="300">
+                        <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2005&q=80" alt="Football Championship" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">Sports</span>
+                                <span class="text-gray-500 text-sm ml-auto">February 28, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Football Team Wins County Championship</h3>
+                            <p class="text-gray-600 mb-4">Our boys' football team emerged victorious in the Kisumu County Secondary Schools Football Championship, defeating rivals 3-1 in the final.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('football-win')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- Alumni Success News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="alumni" data-aos="fade-up" data-aos-delay="400">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1976&q=80" alt="Presidential Award" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-semibold">Alumni</span>
+                                <span class="text-gray-500 text-sm ml-auto">February 25, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Alumnus Receives Presidential Award</h3>
+                            <p class="text-gray-600 mb-4">Dr. Sarah Wanjiku (Class of 2010) was honored with a presidential award for her contributions to medical research and community health initiatives.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('alumni-award')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- Career Day News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="event" data-aos="fade-up" data-aos-delay="500">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Career Guidance Week" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm font-semibold">Event</span>
+                                <span class="text-gray-500 text-sm ml-auto">February 20, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Career Guidance Week Concludes Successfully</h3>
+                            <p class="text-gray-600 mb-4">Over 200 students benefited from career guidance sessions led by professionals from various fields, helping them make informed future choices.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('career-week')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- Drama Festival News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="achievement" data-aos="fade-up" data-aos-delay="600">
+                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Drama Festival" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">Achievement</span>
+                                <span class="text-gray-500 text-sm ml-auto">February 15, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Drama Club Wins Regional Festival</h3>
+                            <p class="text-gray-600 mb-4">Our drama club's outstanding performance of "The Voice of Change" earned them first place at the Western Kenya Schools Drama Festival.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('drama-win')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- New Dormitory News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="infrastructure" data-aos="fade-up" data-aos-delay="700">
+                        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="New Dormitory" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">Infrastructure</span>
+                                <span class="text-gray-500 text-sm ml-auto">February 10, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Modern Girls' Dormitory Nears Completion</h3>
+                            <p class="text-gray-600 mb-4">Construction of the new 200-bed capacity girls' dormitory is 90% complete, featuring modern amenities and improved living conditions.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('new-dormitory')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- Debate Competition News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="academic" data-aos="fade-up" data-aos-delay="800">
+                        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2012&q=80" alt="Debate Competition" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">Academic</span>
+                                <span class="text-gray-500 text-sm ml-auto">February 5, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Debate Team Advances to National Finals</h3>
+                            <p class="text-gray-600 mb-4">Our debate team secured their place in the national finals after defeating 15 other schools in the regional championships.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('debate-finals')">Read More</button>
+                        </div>
+                    </article>
+                    
+                    <!-- Community Service News -->
+                    <article class="news-card neu-card overflow-hidden" data-category="event" data-aos="fade-up" data-aos-delay="900">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Community Service" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm font-semibold">Event</span>
+                                <span class="text-gray-500 text-sm ml-auto">January 30, 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Students Lead Community Clean-Up Drive</h3>
+                            <p class="text-gray-600 mb-4">Over 300 students participated in a community service initiative, cleaning local markets and planting trees in the neighborhood.</p>
+                            <button class="text-blue-600 font-semibold hover:underline" onclick="openArticle('community-service')">Read More</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center" data-aos="fade-up">
+                <button id="loadMoreBtn" class="neu-button px-8 py-4 text-blue-600 font-semibold text-lg">
+                    <i class="fas fa-plus mr-2"></i>Load More Articles
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="neu-card p-8 text-center" data-aos="fade-up">
+                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-bell text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Stay Updated</h3>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    Subscribe to our newsletter to receive the latest news, updates, and announcements from Orero High School directly in your inbox.
+                </p>
+                <div class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" id="emailSubscribe" placeholder="Enter your email address"
+                            class="flex-1 search-box px-4 py-3 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="subscribeBtn" class="neu-button px-6 py-3 text-blue-600 font-semibold">
+                        <i class="fas fa-paper-plane mr-2"></i>Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Modal -->
+    <div class="modal" id="articleModal">
+        <div class="modal-content p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modalTitle" class="text-3xl font-bold text-gray-800"></h2>
+                <button id="closeModal" class="text-gray-600 hover:text-gray-800 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modalContent" class="text-gray-600 leading-relaxed">
+                <!-- Article content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- School Info -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Orero High School</h3>
+                            <p class="text-sm opacity-80">Excellence in Education</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Stay connected with the latest news and updates from Orero High School.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-white">About Us</a></li>
+                        <li><a href="academics.html" class="text-gray-300 hover:text-white">Academics</a></li>
+                        <li><a href="staff.html" class="text-gray-300 hover:text-white">Our Staff</a></li>
+                        <li><a href="admissions.html" class="text-gray-300 hover:text-white">Admissions</a></li>
+                        <li><a href="gallery.html" class="text-gray-300 hover:text-white">Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- News Categories -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">News Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Academic Excellence</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Sports & Games</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Infrastructure</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Alumni Success</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">School Events</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Information</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                            <span class="text-gray-300">news@orerohigh.ac.ke</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-blue-400 mr-3"></i>
+                            <span class="text-gray-300">+254 722 288 230</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-400 mr-3"></i>
+                            <span class="text-gray-300">Homabay County, Kenya</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-300">
+                    &copy; 2024 Orero High School. All rights reserved. | Excellence Through Knowledge
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hidden hover:bg-blue-700 transition z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- AOS Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true
+        });
+
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1500);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuContent = document.getElementById('mobileMenuContent');
+                
+        mobileMenu.addEventListener('click', function() {
+            mobileMenuContent.classList.toggle('hidden');
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const newsGrid = document.getElementById('newsGrid');
+        const newsCards = document.querySelectorAll('.news-card');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+                    
+            newsCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const content = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Category Filter
+        const categoryFilters = document.querySelectorAll('.category-filter');
+                
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active filter
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter news cards
+                newsCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Clear search when filtering
+                searchInput.value = '';
+            });
+        });
+
+        // Article Modal
+        const articleModal = document.getElementById('articleModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const closeModal = document.getElementById('closeModal');
+
+        // Article content database
+        const articles = {
+            'featured': {
+                title: 'Orero High School Achieves Outstanding KCSE Results',
+                content: `
+                    <img src="/images/news/result24.jpg" alt="KCSE Results Celebration" class="w-full max-w-md mx-auto mb-6 object-contain rounded-lg">
+                    <p class="mb-4">Orero High School is proud to announce exceptional performance in the 2024 Kenya Certificate of Secondary Education (KCSE) examinations. Our students achieved a remarkable mean score of 9.4235, placing the school among the top 10% of institutions in Kisumu County.</p>
+                                    
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">Outstanding Performance Statistics:</h4>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>0 students scored grade A (12 points)</li>
+                        <li>73 students achieved A- (11 points)</li>
+                        <li>209 students achieved B+ (10 points)</li>
+                        <li>242 students scored B (9 points)</li>
+                        <li>85 students achieved B- (8 points)</li>
+                        <li>5 students achieved C+ (7 points)</li>
+                        <li>100% of graduates qualified for university admission</li>
+                        <li>100% pass rate in all subjects</li>
+                        <li>Achieving a 100% university transfer/pass rate is what we as Orero fraternity take pride in, for we believe Education Empowers.</li>
+                    </ul>
+                                    
+                    <p class="mb-4">Principal Mr. Dickens Bula expressed her pride in the students' achievements: "These results are a testament to the hard work and dedication of our students, teachers, and the entire school community. We are particularly proud that 100% of our graduates have qualified for university admission, opening doors to bright futures."</p>
+                                    
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">Subject Excellence:</h4>
+                    <p class="mb-4">The school showed particular strength in STEM subjects, with Mathematics recording a mean score of 9.2, Chemistry 8.9, and Physics 8.6. This aligns with our focus on Science, Technology, Engineering, and Mathematics education.</p>
+                                    
+                    <p class="mb-4">The success is attributed to our comprehensive academic program, dedicated teaching staff, well-equipped laboratories, and supportive learning environment. We congratulate all our students and look forward to their continued success in higher education and beyond.</p>
+                `
+            },
+            'science-fair': {
+                title: 'Students Win Regional Science Fair',
+                content: `
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Science Fair Victory" class="w-full h-64 object-cover rounded-lg mb-6">
+                    <p class="mb-4">Form 3 students Mary Achieng and John Kiprotich have brought honor to Orero High School by winning first place at the prestigious Western Kenya Regional Science Fair held in Eldoret.</p>
+                                    
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">The Winning Project:</h4>
+                    <p class="mb-4">Their project, titled "Solar-Powered Water Purification System for Rural Communities," impressed judges with its innovation, practicality, and potential for community impact. The system uses solar energy to power a multi-stage filtration process that can purify up to 50 liters of water per hour.</p>
+                                    
+                    <p class="mb-4">"We were inspired by the water challenges in our community," said Mary Achieng. "We wanted to create a solution that was both effective and sustainable." John Kiprotich added, "The project took us six months to complete, with guidance from our chemistry and physics teachers."</p>
+                                    
+                    <p class="mb-4">The students will now represent Western Kenya at the National Science Fair in Nairobi next month, where they will compete against winners from other regions across the country.</p>
+                                    
+                    <p class="mb-4">Science Department Head Dr. Mary Wanjiku commended the students: "This achievement demonstrates the quality of scientific thinking and innovation we nurture at Orero High School. We are confident they will perform excellently at the national level."</p>
+                `
+            },
+            'computer-lab': {
+                title: 'New Computer Laboratory Officially Opened',
+                content: `
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Computer Laboratory Opening" class="w-full h-64 object-cover rounded-lg mb-6">
+                    <p class="mb-4">Orero High School has officially opened its new state-of-the-art computer laboratory, marking a significant milestone in the school's commitment to digital literacy and 21st-century education.</p>
+                                    
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">Modern Facilities:</h4>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>40 modern computer workstations with latest software</li>
+                        <li>High-speed internet connectivity</li>
+                        <li>Interactive whiteboard and projector system</li>
+                        <li>Air conditioning and backup power supply</li>
+                        <li>Dedicated server room</li>
+                    </ul>
+                                    
+                    <p class="mb-4">The laboratory was inaugurated by the County Education Officer, Mr. David Ochieng, who praised the school's vision for technological advancement. "This facility will prepare students for the digital economy and ensure they are competitive in the modern world," he said.</p>
+                                    
+                    <p class="mb-4">Students will now have access to comprehensive computer studies curriculum including programming, web development, and digital design. The laboratory will also support other subjects through research and multimedia presentations.</p>
+                                    
+                    <p class="mb-4">IT Coordinator Mr. Paul Mwangi expressed excitement about the new possibilities: "This laboratory opens up endless opportunities for our students to explore technology and develop crucial digital skills for their future careers."</p>
+                `
+            }
+        };
+
+        // Open Article Function
+        function openArticle(articleId) {
+            const article = articles[articleId];
+            if (article) {
+                modalTitle.textContent = article.title;
+                modalContent.innerHTML = article.content;
+                articleModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Close Modal
+        closeModal.addEventListener('click', function() {
+            articleModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        articleModal.addEventListener('click', function(e) {
+            if (e.target === articleModal) {
+                articleModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Newsletter Subscription
+        const subscribeBtn = document.getElementById('subscribeBtn');
+        const emailSubscribe = document.getElementById('emailSubscribe');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+
+        subscribeBtn.addEventListener('click', function() {
+            const email = emailSubscribe.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    
+            if (!email) {
+                showNotification('Please enter your email address', 'error');
+                return;
+            }
+                    
+            if (!emailRegex.test(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+                    
+            // Simulate subscription
+            showNotification('Successfully subscribed to our newsletter!', 'success');
+            emailSubscribe.value = '';
+        });
+
+        function showNotification(message, type) {
+            notificationText.textContent = message;
+            notification.className = `notification ${type === 'error' ? 'bg-red-500' : 'bg-green-500'}`;
+            notification.classList.add('show');
+                    
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Load More Functionality
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        let articlesLoaded = 9;
+                
+        loadMoreBtn.addEventListener('click', function() {
+            // Simulate loading more articles
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+                    
+            setTimeout(() => {
+                showNotification('No more articles to load', 'info');
+                this.innerHTML = '<i class="fas fa-check mr-2"></i>All Articles Loaded';
+                this.disabled = true;
+                this.classList.add('opacity-50');
+            }, 1500);
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+                
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+                
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', function(e) {
+            if (articleModal.classList.contains('active') && e.key === 'Escape') {
+                closeModal.click();
+            }
+        });
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click events to article cards
+            document.querySelectorAll('.news-card button').forEach(button => {
+                if (button.getAttribute('onclick')) return; // Skip if already has onclick
+                
+                button.addEventListener('click', function() {
+                    const card = this.closest('.news-card');
+                    const title = card.querySelector('h3').textContent;
+                                    
+                    // Create a generic article for cards without specific content
+                    modalTitle.textContent = title;
+                    modalContent.innerHTML = `
+                        <img src="${card.querySelector('img').src}" alt="${title}" class="w-full h-64 object-cover rounded-lg mb-6">
+                        <p class="mb-4">This is a detailed article about "${title}". Full content would be loaded from the server in a real implementation.</p>
+                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                        <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    `;
+                    articleModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

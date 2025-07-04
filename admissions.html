@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions - Orero High School</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Neumorphism Styles */
+        .neu-card {
+            background: #f0f0f3;
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+            border-radius: 20px;
+        }
+        
+        .neu-inset {
+            background: #f0f0f3;
+            box-shadow: 
+                inset 20px 20px 60px #d1d1d4,
+                inset -20px -20px 60px #ffffff;
+            border-radius: 20px;
+        }
+        
+        .neu-button {
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            box-shadow: 
+                20px 20px 60px #d1d1d4,
+                -20px -20px 60px #ffffff;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .neu-button:hover {
+            box-shadow: 
+                10px 10px 30px #d1d1d4,
+                -10px -10px 30px #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        /* Custom Kenyan School Colors */
+        .primary-blue { background: #1e40af; }
+        .secondary-green { background: #059669; }
+        .accent-gold { background: #d97706; }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation sticky */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Hero gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e40af 0%, #059669 50%, #d97706 100%);
+        }
+        
+        /* Image placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.active {
+            max-height: 500px;
+        }
+        
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e5e7eb;
+            border-top: 5px solid #1e40af;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .neu-card {
+                box-shadow: 10px 10px 30px #d1d1d4, -10px -10px 30px #ffffff;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="text-center">
+            <div class="spinner mb-4"></div>
+            <h3 class="text-xl font-semibold text-blue-600">Loading Admissions...</h3>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky-nav shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Orero High School</h1>
+                        <p class="text-sm text-gray-600">Excellence in Education</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="academics.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Academics</a>
+                    <a href="staff.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Staff</a>
+                    <a href="admissions.html" class="nav-link text-blue-600 font-semibold transition">Admissions</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Gallery</a>
+                    <a href="news.html" class="nav-link text-gray-700 hover:text-blue-600 transition">News</a>
+                    <a href="contact.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                
+                <button id="mobileMenu" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuContent" class="hidden md:hidden mt-4 space-y-2">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+                <a href="about.html" class="block py-2 text-gray-700 hover:text-blue-600">About</a>
+                <a href="academics.html" class="block py-2 text-gray-700 hover:text-blue-600">Academics</a>
+                <a href="staff.html" class="block py-2 text-gray-700 hover:text-blue-600">Staff</a>
+                <a href="admissions.html" class="block py-2 text-blue-600 font-semibold">Admissions</a>
+                <a href="gallery.html" class="block py-2 text-gray-700 hover:text-blue-600">Gallery</a>
+                <a href="news.html" class="block py-2 text-gray-700 hover:text-blue-600">News</a>
+                <a href="contact.html" class="block py-2 text-gray-700 hover:text-blue-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+<section class="relative text-white h-screen flex items-center justify-center overflow-hidden">
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-[-1] bg-cover bg-center" style="background-image: url('/images/gate.jpg');"></div>
+
+  <!-- Hero Content -->
+  <div class="container mx-auto px-6 text-center z-10">
+    <div data-aos="fade-up" data-aos-duration="1000" class="bg-white bg-opacity-10 p-8 md:p-12 rounded-xl backdrop-blur-md shadow-xl inline-block">
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg tracking-wide">ADMISSIONS</h1>
+      <p class="text-xl md:text-2xl mb-4 text-yellow-300 font-medium">Join Our Community of Excellence</p>
+      <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-200">
+        All placements are handled by the Ministry of Education. If you’ve been selected, welcome aboard!
+      </p>
+
+      <!-- Scroll Down Button -->
+      <a href="#requirements" class="inline-block mt-6 animate-bounce text-white hover:text-yellow-400 transition duration-300">
+        <div class="w-12 h-12 border-2 border-white rounded-full flex items-center justify-center hover:bg-white hover:text-blue-700">
+          <i class="fas fa-arrow-down text-xl"></i>
+        </div>
+        <span class="block mt-2 text-sm font-semibold">View Requirements</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+    <!-- Admissions Section -->
+    <section id="requirements" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Admissions Information</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Join the Orero High School family and embark on a journey of academic excellence and character development.</p>
+            </div>
+            
+            <!-- Admission Process -->
+            <div class="neu-card p-8 mb-12" data-aos="fade-up">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-info-circle text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Admission Statement</h3>
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <p class="text-lg text-gray-700 font-medium">
+                            Admissions to Orero High School are handled through Kenya's Ministry of Education Form 1 Placement system. 
+                            Students are selected based on their KCPE performance and school preference choices.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-4">For New Students (Form 1)</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>Complete KCPE examination</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>List Orero High School as your preference</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>Wait for MOE placement notification</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>Report on the specified date</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-4">For Transfer Students</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-phone text-blue-600 mr-2"></i>Contact the school directly</li>
+                            <li class="flex items-center"><i class="fas fa-envelope text-blue-600 mr-2"></i>Email: admissions@orerohigh.ac.ke</li>
+                            <li class="flex items-center"><i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>Visit the school office</li>
+                            <li class="flex items-center"><i class="fas fa-clock text-blue-600 mr-2"></i>Office hours: 8:00 AM - 4:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Downloads Section -->
+            <div class="mb-12" data-aos="fade-up">
+                <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">Important Documents</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="neu-card p-6 text-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-file-pdf text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">Fee Structure</h4>
+                        <p class="text-gray-600 mb-4">Complete breakdown of school fees and payment schedule</p>
+                        <button class="neu-button px-6 py-2 text-red-600 font-semibold">
+                            <i class="fas fa-download mr-2"></i>Download PDF
+                        </button>
+                    </div>
+                    
+                    <div class="neu-card p-6 text-center">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-file-pdf text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">Admission Requirements</h4>
+                        <p class="text-gray-600 mb-4">Detailed list of required documents and procedures</p>
+                        <button class="neu-button px-6 py-2 text-green-600 font-semibold">
+                            <i class="fas fa-download mr-2"></i>Download PDF
+                        </button>
+                    </div>
+                    
+                    <div class="neu-card p-6 text-center">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-file-pdf text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">School Rules</h4>
+                        <p class="text-gray-600 mb-4">Student handbook and code of conduct</p>
+                        <button class="neu-button px-6 py-2 text-blue-600 font-semibold">
+                            <i class="fas fa-download mr-2"></i>Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonials -->
+            <div class="mb-12" data-aos="fade-up">
+                <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">What Our Community Says</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="neu-card p-6">
+                        <div class="flex items-center mb-4">
+                            <img src="/images/mom.jpg" alt="Parent Testimonial" class="h-12 w-12 rounded-full mr-4 object-cover shadow-md" />
+                            <div>
+                                <h4 class="font-bold text-gray-800">Mrs. Jane Achieng Abuor</h4>
+                                <p class="text-gray-600 text-sm">Parent</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Orero High School has transformed my daughter's academic journey. The teachers are dedicated, and the environment is truly conducive for learning."</p>
+                    </div>
+                    
+                    <div class="neu-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="img-placeholder h-12 w-12 rounded-full mr-4">Alumni Photo</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Dr. Michael Owuor</h4>
+                                <p class="text-gray-600 text-sm">Alumni (Class of 2015)</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"The foundation I received at Orero High School prepared me well for university and my medical career. Forever grateful!"</p>
+                    </div>
+                    
+                    <div class="neu-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="img-placeholder h-12 w-12 rounded-full mr-4">Teacher Photo</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Mr. Joseph Mutua</h4>
+                                <p class="text-gray-600 text-sm">Former Teacher</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Teaching at Orero High School was fulfilling. The administration supports innovative teaching methods, and students are eager to learn."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ Section -->
+            <div data-aos="fade-up">
+                <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">Frequently Asked Questions</h3>
+                <div class="neu-card p-6">
+                    <div class="space-y-4">
+                        <div class="accordion-item">
+                            <button class="accordion-header w-full text-left p-4 bg-gray-100 rounded-lg font-semibold text-gray-800 flex justify-between items-center">
+                                What are the admission requirements for Form 1?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content p-4 text-gray-600">
+                                Students must have completed KCPE and been selected through the Ministry of Education placement system. Required documents include KCPE certificate, birth certificate, medical reports, and passport photos.
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header w-full text-left p-4 bg-gray-100 rounded-lg font-semibold text-gray-800 flex justify-between items-center">
+                                What subjects does the school offer?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content p-4 text-gray-600">
+                                We offer all 8 KCSE subjects including Mathematics, English, Kiswahili, Biology, Chemistry, Physics, History & Government, Geography, and CRE. We also offer Computer Studies and French as optional subjects.
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header w-full text-left p-4 bg-gray-100 rounded-lg font-semibold text-gray-800 flex justify-between items-center">
+                                Does the school offer boarding facilities?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content p-4 text-gray-600">
+                                Yes, we have boarding facilities for boys with modern amenities, study halls, and 24/7 supervision. 
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header w-full text-left p-4 bg-gray-100 rounded-lg font-semibold text-gray-800 flex justify-between items-center">
+                                What co-curricular activities are available?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content p-4 text-gray-600">
+                                We offer various activities including debate club, science club, drama, music, scouting, sports (football, basketball, athletics), and academic competitions.
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header w-full text-left p-4 bg-gray-100 rounded-lg font-semibold text-gray-800 flex justify-between items-center">
+                                How can parents communicate with the school?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content p-4 text-gray-600">
+                                Parents can reach us through phone, email, or scheduled visits. We also hold regular parents' meetings and provide progress reports each term.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- School Info -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Orero High School</h3>
+                            <p class="text-sm opacity-80">Excellence in Education</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Nurturing future leaders through quality education, character development, and holistic learning experiences since 1985.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-white">About Us</a></li>
+                        <li><a href="academics.html" class="text-gray-300 hover:text-white">Academics</a></li>
+                        <li><a href="staff.html" class="text-gray-300 hover:text-white">Our Staff</a></li>
+                        <li><a href="admissions.html" class="text-gray-300 hover:text-white">Admissions</a></li>
+                        <li><a href="gallery.html" class="text-gray-300 hover:text-white">Gallery</a></li>
+                    </ul>
+                </div>
+                <!-- Contact Info -->
+<div>
+  <h4 class="text-lg font-bold mb-4">Contact Information</h4>
+  <div class="space-y-3">
+    <div class="flex items-center">
+      <i class="fas fa-map-marker-alt text-blue-400 mr-3"></i>
+      <span class="text-gray-300">Rangwe, Homa Bay County, Kenya</span>
+    </div>
+    <div class="flex items-center">
+      <i class="fas fa-phone text-blue-400 mr-3"></i>
+      <span class="text-gray-300">+254 722 288 230</span>
+    </div>
+    <div class="flex items-center">
+      <i class="fas fa-envelope text-blue-400 mr-3"></i>
+      <span class="text-gray-300">oreroschool@gmail.com</span>
+    </div>
+    <div class="flex items-center">
+      <i class="fas fa-clock text-blue-400 mr-3"></i>
+      <span class="text-gray-300">Mon - Fri: 8:00 AM – 5:00 PM</span>
+    </div>
+  </div>
+</div>
+</div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-300 mb-4 md:mb-0">
+                        &copy; 2024 Orero High School. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-300 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#" class="text-gray-300 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#" class="text-gray-300 hover:text-white text-sm">Cookie Policy</a>
+                    </div>
+                </div>
+                <div class="mt-4 text-gray-400 text-sm">
+                    <p>Motto: "Education Empowers" | Established 1968</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hidden hover:bg-blue-700 transition z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- AOS Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true
+        });
+
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hide');
+            }, 1500);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuContent = document.getElementById('mobileMenuContent');
+        
+        mobileMenu.addEventListener('click', function() {
+            mobileMenuContent.classList.toggle('hidden');
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                // Close all other accordions
+                accordionHeaders.forEach(otherHeader => {
+                    if (otherHeader !== this) {
+                        const otherContent = otherHeader.nextElementSibling;
+                        const otherIcon = otherHeader.querySelector('i');
+                        otherContent.classList.remove('active');
+                        otherIcon.classList.remove('fa-chevron-up');
+                        otherIcon.classList.add('fa-chevron-down');
+                    }
+                });
+                
+                // Toggle current accordion
+                content.classList.toggle('active');
+                icon.classList.toggle('fa-chevron-up');
+                icon.classList.toggle('fa-chevron-down');
+            });
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Download buttons functionality
+        document.querySelectorAll('.neu-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent.includes('Download')) {
+                    alert('Document download would be initiated here. This is a demo version.');
+                } else if (this.textContent.includes('Contact')) {
+                    window.location.href = 'contact.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
