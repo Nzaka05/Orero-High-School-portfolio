@@ -1,644 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orero High School - Excellence Since 1968</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      scroll-behavior: smooth;
-    }
-    
-    /* Hero Section */
-    .hero-section {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-    }
-    
-    .hero-content {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    /* 3D Tour Section */
-    .campus-tour-3d {
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-      perspective: 1000px;
-      min-height: 100vh;
-    }
-    
-    .floating-shape {
-      position: absolute;
-      background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      animation: float 20s infinite ease-in-out;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      25% { transform: translateY(-20px) rotate(90deg); }
-      50% { transform: translateY(0px) rotate(180deg); }
-      75% { transform: translateY(-15px) rotate(270deg); }
-    }
-    
-    .image-3d-container {
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .image-3d-scene {
-      transform-style: preserve-3d;
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .image-3d-scene.active {
-      transform: rotateY(0deg) translateZ(0px);
-      opacity: 1;
-    }
-    
-    .image-3d-scene.prev {
-      transform: rotateY(-45deg) translateZ(-200px);
-      opacity: 0.3;
-    }
-    
-    .image-3d-scene.next {
-      transform: rotateY(45deg) translateZ(-200px);
-      opacity: 0.3;
-    }
-    
-    .image-3d-scene.hidden {
-      transform: rotateY(90deg) translateZ(-400px);
-      opacity: 0;
-    }
-    
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .control-btn-3d {
-      transition: all 0.3s ease;
-      transform-style: preserve-3d;
-    }
-    
-    .control-btn-3d:hover {
-      transform: translateZ(10px) scale(1.1);
-    }
-    
-    .info-card-3d {
-      transition: all 0.3s ease;
-      transform-style: preserve-3d;
-    }
-    
-    .info-card-3d:hover {
-      transform: translateZ(20px) rotateX(5deg);
-    }
-    
-    .info-card-3d.active {
-      transform: translateZ(30px) rotateX(10deg);
-    }
-    
-    .title-3d {
-      background: linear-gradient(45deg, #ffffff, #3b82f6, #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: title-glow 3s ease-in-out infinite alternate;
-    }
-    
-    @keyframes title-glow {
-      0% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
-      100% { text-shadow: 0 0 50px rgba(59, 130, 246, 0.6); }
-    }
-    
-    .progress-ring-bg {
-      stroke: rgba(255, 255, 255, 0.1);
-    }
-    
-    .progress-ring-progress {
-      stroke: #3b82f6;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.8s ease;
-    }
-    
-    /* Loading Animation */
-    .loading-spinner {
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Hover Effects */
-    .hover-lift {
-      transition: all 0.3s ease;
-    }
-    
-    .hover-lift:hover {
-      transform: translateY(-5px);
-    }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .title-3d {
-        font-size: 2.5rem;
-      }
-      
-      .image-3d-container {
-        height: 50vh;
-      }
-      
-      .floating-ui {
-        position: relative;
-        width: 100%;
-        margin: 10px 0;
-        transform: none !important;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orero High School - Excellence in Education Since 1968</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .slideshow-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out, transform 2.5s ease-in-out;
+            transform: scale(1.1);
+            z-index: 1;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(15, 23, 42, 0.8) 0%, 
+                rgba(30, 41, 59, 0.7) 25%, 
+                rgba(59, 130, 246, 0.6) 50%, 
+                rgba(16, 185, 129, 0.5) 75%, 
+                rgba(15, 23, 42, 0.8) 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 2;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+        .particle:nth-child(10) { left: 95%; animation-delay: 3.5s; }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.7; 
+            }
+            50% { 
+                transform: translateY(-30px) rotate(180deg); 
+                opacity: 1; 
+            }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+        
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            position: relative;
+            background: linear-gradient(45deg, #ffffff, #e2e8f0, #cbd5e1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: textReveal 1.5s ease-out, textShimmer 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.05em;
+        }
+        
+        .hero-title::before {
+            content: 'ORERO';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/aerial/aerial.jpg') center/cover;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.8;
+            z-index: 1;
+            animation: imageShift 4s ease-in-out infinite;
+        }
+        
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            opacity: 0;
+            animation: shine 2s ease-in-out infinite;
+        }
+        
+        @keyframes textReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes imageShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes shine {
+            0% { opacity: 0; transform: translateX(-100%); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100%); }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.02em;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 1.5s ease-out 1s both;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8, #1e40af);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.6);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            border: 2px solid transparent;
+        }
+        
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.6);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .quick-link-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .quick-link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .quick-link-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .quick-link-card:hover::before {
+            left: 100%;
+        }
+        
+        .quick-link-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quick-link-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+        
+        .quick-link-card:hover .quick-link-icon::before {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .icon-about { background: linear-gradient(135deg, #3b82f6, #1d4ed8, #1e40af); }
+        .icon-staff { background: linear-gradient(135deg, #10b981, #059669, #047857); }
+        .icon-gallery { background: linear-gradient(135deg, #8b5cf6, #7c3aed, #6d28d9); }
+        .icon-news { background: linear-gradient(135deg, #f59e0b, #d97706, #b45309); }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar a {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .navbar a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
+        }
+        
+        .navbar a:hover::before {
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 1rem 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        .slideshow-container .slide {
+    background-color: #0f172a; /* fallback bg */
+}
+  .slide {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slide.active {
+    opacity: 1;
+    z-index: 10;
+  }
+
+    </style>
 </head>
-<body class="bg-gray-50">
-  <!-- Navigation -->
-  <nav class="bg-white shadow-lg fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <h1 class="text-2xl font-bold text-blue-900">Orero High School</h1>
-          </div>
+<body class="font-sans">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-3">
+                        <img src="logo.png" alt="Orero Logo" class="w-12 h-12 object-contain rounded-lg">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-800">ORERO HIGH SCHOOL</h1>
+                            <p class="text-xs text-gray-600">EDUCATION</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Home</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">About</a>
+                    <a href="academics.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Academics</a>
+                    <a href="staff.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Staff</a>
+                    <a href="admission.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Admission</a>
+                    <a href="gallery.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Gallery</a>
+                    <a href="news.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">News</a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="hidden md:flex items-center space-x-8">
-          <a href="index.html" class="text-blue-900 font-semibold border-b-2 border-blue-900">Home</a>
-          <a href="about.html" class="text-gray-700 hover:text-blue-900 font-medium">About</a>
-          <a href="academics.html" class="text-gray-700 hover:text-blue-900 font-medium">Academics</a>
-          <a href="staff.html" class="text-gray-700 hover:text-blue-900 font-medium">Staff</a>
-          <a href="admissions.html" class="text-gray-700 hover:text-blue-900 font-medium">Admissions</a>
-          <a href="gallery.html" class="text-gray-700 hover:text-blue-900 font-medium">Gallery</a>
-          <a href="news.html" class="text-gray-700 hover:text-blue-900 font-medium">News</a>
-          <a href="contact.html" class="text-gray-700 hover:text-blue-900 font-medium">Contact</a>
-        </div>
-        <div class="md:hidden flex items-center">
-          <button class="mobile-menu-button">
-            <i class="fas fa-bars text-gray-700 text-xl"></i>
-          </button>
-        </div>
-      </div>
-    </div>
+    </nav>
+
+    <section class="relative w-full h-[500px] overflow-hidden">
+  <!-- Slides -->
+  <div class="slideshow-container absolute inset-0 z-0">
     
-    <!-- Mobile Menu -->
-    <div class="mobile-menu hidden md:hidden bg-white">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <a href="index.html" class="block px-3 py-2 text-blue-900 font-medium">Home</a>
-        <a href="about.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">About</a>
-        <a href="academics.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">Academics</a>
-        <a href="staff.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">Staff</a>
-        <a href="admissions.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">Admissions</a>
-        <a href="gallery.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">Gallery</a>
-        <a href="news.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">News</a>
-        <a href="contact.html" class="block px-3 py-2 text-gray-700 hover:text-blue-900">Contact</a>
+    <!-- Slide 1 -->
+    <div class="slide active absolute inset-0 bg-cover bg-center flex items-center justify-center transition-opacity duration-1000" style="background-image: url('aerial.jpg');">
+      <div class="text-white text-center bg-black bg-opacity-40 p-6 rounded-lg">
+        <h2 class="text-4xl md:text-5xl font-bold mb-2">WELCOME TO ORERO HIGH SCHOOL</h2>
+        <p class="text-xl md:text-2xl font-light">Excellence in Education Since 1968</p>
       </div>
     </div>
-  </nav>
 
- <!-- Hero Section -->
-<section class="hero-section min-h-screen flex items-center justify-center text-white relative overflow-hidden bg-cover bg-center" style="background-image: url('images/hero.jpg');">
-  <div class="absolute inset-0 bg-black bg-opacity-40 z-0"></div>
-
-  <div class="text-center max-w-4xl mx-auto px-6 relative z-10">
-    <div class="hero-content rounded-xl p-8 md:p-12 shadow-lg bg-white bg-opacity-10 backdrop-blur-md">
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-wide">ORERO HIGH SCHOOL</h1>
-      <p class="text-xl md:text-2xl font-light mb-4 text-blue-100">Excellence in Education Since 1968</p>
-      <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-200">
-        Where heritage meets high performance — discover the school that defines legacy.
-      </p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="academics.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 hover:shadow-xl hover:scale-105">
-          <i class="fas fa-chart-line mr-2"></i>View KCSE Results
-        </a>
-        <a href="https://youtu.be/A7GQLpuVyJ0?si=sScNLrnG2V8U42sf" target="_blank" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 hover:shadow-xl hover:scale-105">
-          <i class="fas fa-music mr-2"></i>Orero's Jerusalema Vibe
-        </a>
+    <!-- Slide 2 -->
+    <div class="slide absolute inset-0 bg-cover bg-center flex items-center justify-center transition-opacity duration-1000" style="background-image: url('hero.jpg');">
+      <div class="text-white text-center bg-black bg-opacity-40 p-6 rounded-lg">
+        <h2 class="text-4xl md:text-5xl font-bold mb-2">Empowering Future Leaders</h2>
+        <p class="text-xl md:text-2xl font-light">Through Innovation and Discipline</p>
       </div>
     </div>
+
+    <!-- Slide 3 -->
+    <div class="slide absolute inset-0 bg-cover bg-center flex items-center justify-center transition-opacity duration-1000" style="background-image: url('library.jpg');">
+      <div class="text-white text-center bg-black bg-opacity-40 p-6 rounded-lg">
+        <h2 class="text-4xl md:text-5xl font-bold mb-2">A Culture of Academic Excellence</h2>
+        <p class="text-xl md:text-2xl font-light">Driven by Passionate Educators</p>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide absolute inset-0 bg-cover bg-center flex items-center justify-center transition-opacity duration-1000" style="background-image: url('suswa.jpg');">
+      <div class="text-white text-center bg-black bg-opacity-40 p-6 rounded-lg">
+        <h2 class="text-4xl md:text-5xl font-bold mb-2">Unity, Faith, Discipline</h2>
+        <p class="text-xl md:text-2xl font-light">Our Values Define Us</p>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide absolute inset-0 bg-cover bg-center flex items-center justify-center transition-opacity duration-1000" style="background-image: url('usambara.jpg');">
+      <div class="text-white text-center bg-black bg-opacity-40 p-6 rounded-lg">
+        <h2 class="text-4xl md:text-5xl font-bold mb-2">Welcome to a Legacy of Greatness</h2>
+        <p class="text-xl md:text-2xl font-light">Orero High — Since 1968</p>
+      </div>
+    </div>
+
+  </div>
+  <!-- Floating Particles -->
+  <div class="floating-particles absolute inset-0 z-20 pointer-events-none">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
 </section>
 
+    <!-- Quick Links Section -->
+    <section class="py-20 bg-gray-50" id="quick-links">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Quick Links</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-  <!-- Highlights Section -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-4xl font-bold text-gray-900 mb-6">Recent KCSE Performance</h2>
-      <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-lg hover-lift">
-          <i class="fas fa-chart-line text-3xl mb-3"></i>
-          <h3 class="text-3xl font-bold">9.42</h3>
-          <p class="text-sm">KCSE Mean Score (2024)</p>
-        </div>
-        <div class="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-lg hover-lift">
-          <i class="fas fa-graduation-cap text-3xl mb-3"></i>
-          <h3 class="text-3xl font-bold">100%</h3>
-          <p class="text-sm">University Transition</p>
-        </div>
-        <div class="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-6 rounded-lg hover-lift">
-          <i class="fas fa-users text-3xl mb-3"></i>
-          <h3 class="text-3xl font-bold">614</h3>
-          <p class="text-sm">Graduated Students</p>
-        </div>
-        <div class="bg-gradient-to-r from-orange-600 to-orange-700 text-white p-6 rounded-lg hover-lift">
-          <i class="fas fa-medal text-3xl mb-3"></i>
-          <h3 class="text-3xl font-bold">1st</h3>
-          <p class="text-sm">Nyanza Region (2021)</p>
-        </div>
-      </div>
-    </div>
-  </section>
+                <a href="about.html" class="quick-link-card block">
+                    <div class="quick-link-icon icon-about">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 text-center">About</h3>
+                    <p class="text-gray-600 text-center mt-2">Learn more about our school's mission, vision, and values</p>
+                </a>
 
-  <!-- About Us Section -->
-  <section class="py-20 bg-gray-100">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold mb-4 text-gray-900">Over 5 Decades of Transformative Education</h2>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-        Since 1968, Orero High School has remained a pillar of academic excellence in Kenya. From a humble beginning to one of the country's most consistent performers, we raise bold, disciplined and visionary men.
-      </p>
-      <a href="about.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition hover-lift">
-        Learn More About Us
-      </a>
-    </div>
-  </section>
+                <a href="staff.html" class="quick-link-card block">
+                    <div class="quick-link-icon icon-staff">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 text-center">Staff</h3>
+                    <p class="text-gray-600 text-center mt-2">Meet our dedicated teachers and administrative team</p>
+                </a>
 
-  <!-- 3D Campus Tour Section -->
-  <section class="campus-tour-3d relative overflow-hidden">
-    <!-- Floating Shapes -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="floating-shape circle w-10 h-10 top-[10%] left-[10%] rounded-full" style="animation-delay: 0s;"></div>
-      <div class="floating-shape triangle w-0 h-0 border-l-[30px] border-r-[30px] border-b-[50px] border-l-transparent border-r-transparent border-b-blue-400/20 top-[20%] right-[15%]" style="animation-delay: 2s;"></div>
-      <div class="floating-shape hexagon w-14 h-14 bottom-[30%] left-[20%]" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); animation-delay: 4s;"></div>
-      <div class="floating-shape circle w-8 h-8 top-[60%] right-[20%] rounded-full" style="animation-delay: 6s;"></div>
-      <div class="floating-shape triangle w-0 h-0 border-l-[30px] border-r-[30px] border-b-[50px] border-l-transparent border-r-transparent border-b-blue-400/20 bottom-[20%] right-[30%]" style="animation-delay: 8s;"></div>
-      <div class="floating-shape hexagon w-14 h-14 top-[40%] left-[5%]" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); animation-delay: 10s;"></div>
-    </div>
-    
-    <!-- Particle System -->
-    <div class="absolute inset-0 pointer-events-none" id="particleSystem"></div>
-    
-    <!-- Title -->
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10 pointer-events-none">
-      <h1 class="title-3d text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4">CAMPUS TOUR</h1>
-       <p class="text-xl md:text-2xl text-white/80">Experience Excellence in Orero</p>
-    </div>
-    
-    <!-- 3D Image Container -->
-    <div class="container mx-auto px-4 py-20 relative z-10">
-      <div class="image-3d-container w-full min-h-[70vh] max-h-[90vh] relative" id="imageContainer">
-        <!-- Image Scene 1 -->
-        <div class="image-3d-scene absolute inset-0 rounded-2xl overflow-hidden shadow-2xl active" data-index="0">
-          <img src="./images/aerial/hero.jpg" 
-               alt="Campus Overview" 
-               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-        </div>
-        
-        <!-- Image Scene 2 -->
-        <div class="image-3d-scene absolute inset-0 rounded-2xl overflow-hidden shadow-2xl hidden" data-index="1">
-          <img src="./images/aerial/aerial.jpg" 
-               alt="Aerial View" 
-               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-        </div>
-        
-        <!-- Image Scene 3 -->
-        <div class="image-3d-scene absolute inset-0 rounded-2xl overflow-hidden shadow-2xl hidden" data-index="2">
-          <img src="./images/aerial/library.jpg" 
-               alt="Library" 
-               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-        </div>
-        
-        <!-- Image Scene 4 -->
-        <div class="image-3d-scene absolute inset-0 rounded-2xl overflow-hidden shadow-2xl hidden" data-index="3">
-          <img src="./images/aerial/suswa.jpg" 
-               alt="Suswa Dormitory" 
-               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-        </div>
-        
-        <!-- Image Scene 5 -->
-        <div class="image-3d-scene absolute inset-0 rounded-2xl overflow-hidden shadow-2xl hidden" data-index="4">
-          <img src="./images/aerial/usambara.jpg" 
-               alt="Usambara Dormitory" 
-               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-        </div>
-      </div>
-    </div>
-    
-    <!-- Floating UI Container -->
-    <div class="container mx-auto px-4 py-6">
-      <div class="glass-effect w-full md:w-72 p-6 rounded-2xl shadow-xl z-10 hover-lift mt-2 mx-auto">
-        <div class="text-white">
-          <div class="flex items-center mb-3">
-            <i class="fas fa-info-circle text-blue-400 mr-2"></i>
-            <h3 class="font-bold text-lg">Campus Information</h3>
-          </div>
-          <div id="campusInfo">
-            <h4 class="font-semibold text-blue-300 mb-2">Campus Overview</h4>
-            <p class="text-sm text-gray-300">A stunning overview of our beautiful campus nestled in the heart of Rangwe</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+                <a href="academics.html" class="quick-link-card block">
+                    <div class="quick-link-icon icon-gallery">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 text-center">Academics</h3>
+                    <p class="text-gray-600 text-center mt-2">Discover our strong academic programs and performance</p>
+                </a>
 
-  <!-- Academics Teaser -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Academic Excellence</h2>
-        <p class="text-lg text-gray-600 max-w-3xl mx-auto">Our curriculum embraces STEM, humanities, languages, and co-curricular excellence</p>
-      </div>
-      
-      <div class="grid md:grid-cols-4 gap-6 text-center">
-        <div class="bg-blue-100 p-6 rounded-lg hover-lift">
-          <i class="fas fa-atom text-blue-600 text-3xl mb-4"></i>
-          <h3 class="text-xl font-bold">Sciences</h3>
-          <p class="text-gray-600">Modern labs and practical-based learning</p>
+                <a href="gallery.html" class="quick-link-card block">
+                 <div class="quick-link-icon icon-gallery">
+                 <i class="fas fa-images"></i>
+                 </div>
+                 <h3 class="text-xl font-semibold text-gray-800 text-center">Gallery</h3>
+                 <p class="text-gray-600 text-center mt-2">Explore photos from school events, trips, and student life</p>
+            </a>
+            </div>
         </div>
-        <div class="bg-green-100 p-6 rounded-lg hover-lift">
-          <i class="fas fa-calculator text-green-600 text-3xl mb-4"></i>
-          <h3 class="text-xl font-bold">Mathematics</h3>
-          <p class="text-gray-600">Pure, Applied & Statistical learning</p>
-        </div>
-        <div class="bg-purple-100 p-6 rounded-lg hover-lift">
-          <i class="fas fa-book text-purple-600 text-3xl mb-4"></i>
-          <h3 class="text-xl font-bold">Languages</h3>
-          <p class="text-gray-600">English, Kiswahili, French</p>
-        </div>
-        <div class="bg-orange-100 p-6 rounded-lg hover-lift">
-          <i class="fas fa-globe-africa text-orange-600 text-3xl mb-4"></i>
-          <h3 class="text-xl font-bold">Humanities</h3>
-          <p class="text-gray-600">History, Geography & Religious Studies</p>
-        </div>
-      </div>
-      
-      <div class="mt-10 text-center">
-        <a href="academics.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover-lift">
-          Explore Full Academics
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact Info -->
-  <section class="py-20 bg-gray-100">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
-        <p class="text-lg text-gray-600 max-w-xl mx-auto">For inquiries, partnerships, media or school visits</p>
-      </div>
-      
-      <div class="grid md:grid-cols-3 gap-8 text-center">
-        <div class="hover-lift">
-          <i class="fas fa-map-marker-alt text-3xl text-blue-600 mb-4"></i>
-          <p class="text-gray-700">Rangwe, Homa Bay County, Kenya</p>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="logo.png" alt="Orero Logo" class="w-12 h-12 object-contain rounded-lg">
+                        <div>
+                            <h3 class="text-xl font-bold">ORERO</h3>
+                            <p class="text-sm text-gray-400">EDUCATION</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">Excellence in Education Since 1968 | "Education Empowers"</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#academics.html" class="text-gray-400 hover:text-white transition-colors">Academics</a></li>
+                        <li><a href="admission.html" class="text-gray-400 hover:text-white transition-colors">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <p class="text-gray-400 mb-2"><i class="fas fa-phone mr-2"></i> +254 722 288 230</p>
+                    <p class="text-gray-400 mb-2"><i class="fas fa-envelope mr-2"></i> info@orerohigh.ac.ke</p>
+                    <p class="text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> Rangwe, Homa Bay County, Kenya</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Orero High School. All rights reserved.</p>
+            </div>
         </div>
-        <div class="hover-lift">
-          <i class="fas fa-phone text-3xl text-green-600 mb-4"></i>
-          <p class="text-gray-700">+254 722 288 230</p>
-        </div>
-        <div class="hover-lift">
-          <i class="fas fa-envelope text-3xl text-purple-600 mb-4"></i>
-          <p class="text-gray-700">info@orerohigh.ac.ke</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-10">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="grid md:grid-cols-2 gap-6">
-        <div>
-          <h3 class="text-xl font-bold mb-2">Orero High School</h3>
-          <p class="text-gray-400 text-sm">Established 1968 | "Education Empowers"</p>
-        </div>
-        <div class="text-sm text-gray-400 md:text-right">
-          &copy; 2025 Orero High School. All rights reserved.
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    class Campus3DTour {
-      constructor() {
-        this.currentIndex = 0;
-        this.isPlaying = true;
-        this.autoPlayInterval = null;
-        this.scenes = document.querySelectorAll('.image-3d-scene');
-        this.navCards = document.querySelectorAll('.info-card-3d');
-        this.totalSlides = this.scenes.length;
+    <script>
+        // Enhanced slideshow functionality
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
         
-        this.campusData = [
-          {
-            title: "Campus Overview",
-            description: "A stunning overview of our beautiful campus nestled in the heart of Rangwe"
-          },
-          {
-            title: "Aerial View",
-            description: "Bird's eye view showcasing our expansive grounds and modern facilities"
-          },
-          {
-            title: "Library",
-            description: "Our state-of-the-art library equipped with thousands of books and digital resources"
-          },
-          {
-            title: "Suswa Dormitory",
-            description: "Modern dormitory facilities providing comfortable accommodation for our students"
-          },
-          {
-            title: "Usambara Dormitory",
-            description: "Well-maintained dormitory with excellent facilities for student comfort"
-          }
-        ];
-        
-        this.init();
-      }
-      
-      init() {
-        this.setupEventListeners();
-        this.createParticles();
-        this.startAutoPlay();
-        this.updateProgress();
-        this.updateInfo();
-        
-        // Remove loading overlay
-        setTimeout(() => {
-          document.getElementById('loadingOverlay').style.opacity = '0';
-          setTimeout(() => {
-            document.getElementById('loadingOverlay').style.display = 'none';
-          }, 500);
-        }, 1000);
-      }
-      
-      setupEventListeners() {
-        
-        // Mobile menu toggle
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        
-        if (mobileMenuButton && mobileMenu) {
-          mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-          });
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
         }
         
-        // Mouse interaction for 3D effects
-        const container = document.querySelector('.campus-tour-3d');
-        container.addEventListener('mousemove', (e) => {
-          const rect = container.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width - 0.5) * 30;
-          const y = ((e.clientY - rect.top) / rect.height - 0.5) * 30;
-          
-          document.querySelector('.image-3d-container').style.transform = 
-            `rotateX(${-y * 0.5}deg) rotateY(${x * 0.5}deg)`;
+        // Change slide every 6 seconds for better viewing
+        setInterval(nextSlide, 6000);
+        
+        // Enhanced navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
         
-        container.addEventListener('mouseleave', () => {
-          document.querySelector('.image-3d-container').style.transform = 'rotateX(0deg) rotateY(0deg)';
+        // Enhanced quick links interaction
+        document.querySelectorAll('.quick-link-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
         });
-      }
-      
-      createParticles() {
-        const particleSystem = document.getElementById('particleSystem');
-        
-        for (let i = 0; i < 50; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'particle absolute w-0.5 h-0.5 bg-white/30 rounded-full';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.animationDelay = Math.random() * 15 + 's';
-          particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-          particle.style.animationName = 'particle-float';
-          particleSystem.appendChild(particle);
-        }
-      }
-      
-      goToSlide(index) {
-        if (index === this.currentIndex) return;
-        
-        this.currentIndex = index;
-        this.updateScenes();
-        this.updateNavigation();
-        this.updateProgress();
-        this.updateInfo();
-        this.resetAutoPlay();
-      }
-      
-      nextSlide() {
-        this.goToSlide((this.currentIndex + 1) % this.totalSlides);
-      }
-      
-      prevSlide() {
-        this.goToSlide((this.currentIndex - 1 + this.totalSlides) % this.totalSlides);
-      }
-      
-      updateScenes() {
-        this.scenes.forEach((scene, index) => {
-          scene.classList.remove('active', 'prev', 'next', 'hidden');
-          
-          if (index === this.currentIndex) {
-            scene.classList.add('active');
-          } else if (index === (this.currentIndex - 1 + this.totalSlides) % this.totalSlides) {
-            scene.classList.add('prev');
-          } else if (index === (this.currentIndex + 1) % this.totalSlides) {
-            scene.classList.add('next');
-          } else {
-            scene.classList.add('hidden');
-          }
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
-      }
-      
-      updateNavigation() {
-        this.navCards.forEach((card, index) => {
-          card.classList.toggle('active', index === this.currentIndex);
+    window.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 6000);
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
-      }
-      
-      updateProgress() {
-        const progress = ((this.currentIndex + 1) / this.totalSlides) * 100;
-        const circumference = 2 * Math.PI * 35;
-        const offset = circumference - (progress / 100) * circumference;
-        
-        document.getElementById('progressCircle').style.strokeDashoffset = offset;
-        document.getElementById('currentSlide').textContent = this.currentIndex + 1;
-        document.getElementById('totalSlides').textContent = this.totalSlides;
-      }
-      
-      updateInfo() {
-        const campusInfo = document.getElementById('campusInfo');
-        const currentData = this.campusData[this.currentIndex];
-        
-        campusInfo.innerHTML = `
-          <h4 class="font-semibold text-blue-300 mb-2">${currentData.title}</h4>
-          <p class="text-sm text-gray-300">${currentData.description}</p>
-        `;
-      }
-      
-      startAutoPlay() {
-        if (this.isPlaying) {
-          this.autoPlayInterval = setInterval(() => {
-            this.nextSlide();
-          }, 5000);
-        }
-      }
-      
-      stopAutoPlay() {
-        if (this.autoPlayInterval) {
-          clearInterval(this.autoPlayInterval);
-          this.autoPlayInterval = null;
-        }
-      }
-      
-      toggleAutoPlay() {
-        this.isPlaying = !this.isPlaying;
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const icon = playPauseBtn.querySelector('i');
-        
-        if (this.isPlaying) {
-          icon.classList.remove('fa-play');
-          icon.classList.add('fa-pause');
-          this.startAutoPlay();
-        } else {
-          icon.classList.remove('fa-pause');
-          icon.classList.add('fa-play');
-          this.stopAutoPlay();
-        }
-      }
-      
-      resetAutoPlay() {
-        this.stopAutoPlay();
-        if (this.isPlaying) {
-          this.startAutoPlay();
-        }
-      }
-    }
-    
-    // Initialize the 3D Campus Tour
-    document.addEventListener('DOMContentLoaded', () => {
-      window.campusTour = new Campus3DTour();
+
+        // Quick links hover
+        document.querySelectorAll('.quick-link-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     });
-    
-    // Handle visibility changes
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        window.campusTour?.stopAutoPlay();
-      } else if (window.campusTour?.isPlaying) {
-        window.campusTour?.startAutoPlay();
-      }
-    });
-  </script>
+   </script>
 </body>
 </html>
