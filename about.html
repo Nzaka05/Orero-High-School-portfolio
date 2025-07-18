@@ -170,11 +170,9 @@
 </head>
 <body class="bg-gray-50">
     <!-- Loading Screen -->
-   <div class="loading fixed inset-0 bg-white flex items-center justify-center z-[9999]" id="loading">
-    <div class="text-center">
-        <img src="images/lion.jpg" alt="Loading..." class="w-28 h-28 object-contain mx-auto mb-4">
-        <h3 class="text-xl font-semibold text-blue-600 animate-pulse">Roaring into Orero High School...</h3>
-    </div>
+   <div class="loading fixed inset-0 z-[9999] flex items-center justify-center bg-cover bg-center bg-no-repeat" id="loading" style="background-image: url('images/lion.jpg');">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- optional dark overlay -->
+    <h3 class="relative text-2xl font-bold text-white animate-pulse z-10">Roaring into Orero High School...</h3>
 </div>
 
     <!-- Navigation -->
