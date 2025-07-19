@@ -127,7 +127,7 @@
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            transition: opacity 0.8s ease;
+            transition: opacity 1.5s ease;
         }
         
         .loading.hide {
@@ -175,60 +175,95 @@
             background: #1e40af;
             color: white;
         }
-         @keyframes fade-in-up {
-    0% {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 
-  .animate-fade-in {
-    opacity: 0;
-    animation: fade-in-up 0.6s ease-out forwards;
-  }
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  .delay-\[0ms\]     { animation-delay: 0ms; }
-  .delay-\[300ms\]   { animation-delay: 300ms; }
-  .delay-\[600ms\]   { animation-delay: 600ms; }
-  .delay-\[900ms\]   { animation-delay: 900ms; }
-  .delay-\[1200ms\]  { animation-delay: 1200ms; }
-  .delay-\[1500ms\]  { animation-delay: 1500ms; }
+        .animate-fade-in {
+            opacity: 0;
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+        .delay-600 { animation-delay: 600ms; }
+        .delay-700 { animation-delay: 700ms; }
+        .delay-800 { animation-delay: 800ms; }
+        .delay-900 { animation-delay: 900ms; }
+        .delay-1000 { animation-delay: 1000ms; }
+        .delay-1200 { animation-delay: 1200ms; }
+        .delay-1500 { animation-delay: 1500ms; }
+        .delay-2000 { animation-delay: 2000ms; }
+        .loading-screen {
+            background-image: url('image/aerial/library.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .loading-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .loading-spinner {
+            border-top-color: #3b82f6;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loading-text {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-phrase span {
+            display: inline-block;
+            min-width: 0.5em;
+        }
+
 
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Loading Screen -->
-<!-- Fancy Academics Loader -->
-<div class="loading fixed inset-0 z-[9999] flex items-center justify-center bg-cover bg-center bg-no-repeat" 
-     id="loading" 
-     style="background-image: url('images/aerial/library.jpg');">
-
-  <!-- Dark Overlay -->
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-
-  <!-- Main Content -->
-  <div class="text-center relative z-10 px-4">
-    <!-- Spinner -->
-    <div class="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-
-    <!-- Title -->
-    <h3 class="text-xl font-bold text-white mb-4 animate-pulse">Entering the Hall of Scholars...</h3>
-
-    <!-- Fancier Animated Phrase -->
-    <div class="flex flex-wrap justify-center gap-x-2 text-lg font-medium text-white">
-      <span class="animate-fade-in delay-[0ms]">Books</span>
-      <span class="animate-fade-in delay-[300ms]">open.</span>
-      <span class="animate-fade-in delay-[600ms]">Brains</span>
-      <span class="animate-fade-in delay-[900ms]">on.</span>
-      <span class="animate-fade-in delay-[1200ms]">Let's</span>
-      <span class="animate-fade-in delay-[1500ms]">go.</span>
+<!-- Enhanced Loading Screen -->
+    <div id="loading" class="loading fixed inset-0 z-[9999] flex items-center justify-center loading-screen">
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 loading-overlay"></div>
+        
+        <!-- Main Content -->
+        <div class="text-center relative z-10 px-4">
+            <!-- Spinner -->
+            <div class="w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full loading-spinner mx-auto mb-6"></div>
+            
+            <!-- Title -->
+            <h3 class="text-2xl font-bold text-white mb-6 loading-text">Entering the Hall of Scholars...</h3>
+            
+            <!-- Fancier Animated Phrase -->
+            <div class="flex flex-wrap justify-center gap-x-2 text-xl font-medium text-white loading-phrase">
+                <span class="animate-fade-in delay-300">Books</span>
+                <span class="animate-fade-in delay-600">open.</span>
+                <span class="animate-fade-in delay-900">Minds</span>
+                <span class="animate-fade-in delay-1200">ready.</span>
+                <span class="animate-fade-in delay-1500">Let's</span>
+                <span class="animate-fade-in delay-1800">learn.</span>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="w-64 h-2 bg-gray-300 rounded-full mt-8 mx-auto overflow-hidden">
+                <div id="loading-progress" class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
     <!-- Navigation -->
     <nav class="sticky-nav shadow-lg">
@@ -1007,11 +1042,28 @@
             mirror: true
         });
 
-        // Loading Screen
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('hide');
-            }, 1500);
+        // Enhanced Loading Screen with Progress Bar
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loading');
+            const progressBar = document.getElementById('loading-progress');
+            
+            // Simulate loading progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hide');
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 1500);
+                    }, 500);
+                }
+            }, 150);
         });
 
         // Mobile Menu Toggle
