@@ -179,12 +179,21 @@
 </head>
 <body class="bg-gray-50">
     <!-- Loading Screen -->
-    <div class="loading" id="loading">
-        <div class="text-center">
-            <div class="spinner mb-4"></div>
-            <h3 class="text-xl font-semibold text-blue-600">Loading Academic Information...</h3>
-        </div>
-    </div>
+<!-- Academics Loader with Background -->
+<div class="loading fixed inset-0 z-[9999] flex items-center justify-center bg-cover bg-center bg-no-repeat" 
+     id="loading" 
+     style="background-image: url('images/aerial/library.jpg');">
+     
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  
+  <!-- Content -->
+  <div class="text-center relative z-10 px-4">
+    <div class="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+    <h3 class="text-xl font-bold text-white mb-2 animate-pulse">Entering the Hall of Scholars...</h3>
+    <p class="text-md text-blue-100 italic">Books open. Brains on. Let's go.</p>
+  </div>
+</div>
 
     <!-- Navigation -->
     <nav class="sticky-nav shadow-lg">
@@ -999,6 +1008,14 @@
                 updateCounter();
             });
         }
+        window.addEventListener('load', () => {
+    const loader = document.getElementById('loading');
+    if (loader) {
+      loader.style.opacity = '0';
+      loader.style.pointerEvents = 'none';
+      setTimeout(() => loader.style.display = 'none', 500);
+    }
+  });
 
         // Trigger counter animation when section is visible
         const observer = new IntersectionObserver((entries) => {
