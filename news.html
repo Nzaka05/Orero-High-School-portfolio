@@ -21,6 +21,105 @@
         * {
             font-family: 'Inter', sans-serif;
         }
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('images/aerial/usambara.jpg') center/cover no-repeat;
+            z-index: -1;
+            animation: zoomInOut 15s infinite alternate;
+        }
+
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+        
+        /* Spinner Animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Enhanced Typewriter Effect */
+        #typewriter::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            color: #3b82f6;
+            font-weight: bold;
+            margin-left: 2px;
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.7);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        #typewriter {
+            background: linear-gradient(90deg, #fff, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        /* Fade-In Word Animation */
+        .fade-word {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         
         /* Neumorphism Styles */
         .neu-card {
@@ -113,39 +212,7 @@
                 inset -10px -10px 30px #ffffff;
         }
         
-        /* Loading animation */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.5s ease;
-        }
-        
-        .loading.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #e5e7eb;
-            border-top: 5px solid #1e40af;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+       
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
@@ -203,85 +270,39 @@
             opacity: 1;
             transform: translateX(0);
         }
-         /* Background Image Styling */
-    .loading-overlay {
-      background-image: url('/images/aerial/usambara.jpg'); /* 🔁 Change to your image path */
-      background-size: cover;
-      background-position: center;
-      opacity: 0.8;
-    }
-
-    /* Fade-In Word Animation */
-    .fade-word {
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-    .fade-word.delay-\[0ms\] { animation-delay: 0ms; }
-    .fade-word.delay-\[300ms\] { animation-delay: 300ms; }
-    .fade-word.delay-\[600ms\] { animation-delay: 600ms; }
-    .fade-word.delay-\[900ms\] { animation-delay: 900ms; }
-    .fade-word.delay-\[1200ms\] { animation-delay: 1200ms; }
-    .fade-word.delay-\[1500ms\] { animation-delay: 1500ms; }
-
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Typewriter Blinking Cursor */
-    #typewriter::after {
-      content: '|';
-      animation: blink 1s infinite;
-      color: white;
-      margin-left: 4px;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
 
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Loading Screen -->
-     <!-- News & Updates Loading Screen -->
-  <div id="loading" class="fixed inset-0 z-[9999] flex items-center justify-center loading-screen">
-    
-    <!-- Background Overlay -->
-    <div class="absolute inset-0 loading-overlay"></div>
-
-    <!-- Main Loader Content -->
-    <div class="text-center relative z-10 px-4">
-      <!-- Spinner -->
-      <div class="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-
-      <!-- Typewriter Title -->
-      <h3 id="typewriter" class="text-2xl font-bold text-white mb-6 whitespace-nowrap"></h3>
-
-      <!-- Animated Loading Phrase -->
-      <div class="flex flex-wrap justify-center gap-x-2 text-xl font-medium text-white loading-phrase">
-        <span class="fade-word delay-[0ms]">News</span>
-        <span class="fade-word delay-[300ms]">loading.</span>
-        <span class="fade-word delay-[600ms]">Stories</span>
-        <span class="fade-word delay-[900ms]">breaking.</span>
-        <span class="fade-word delay-[1200ms]">Updates</span>
-        <span class="fade-word delay-[1500ms]">coming in.</span>
-      </div>
-
-      <!-- Progress Bar -->
-      <div class="w-64 h-2 bg-gray-300 rounded-full mt-8 mx-auto overflow-hidden">
-        <div id="loading-progress" class="h-full bg-red-500 rounded-full" style="width: 0%"></div>
-      </div>
+     <!-- Loading Screen -->
+    <div id="loading" class="loading-screen">
+        <!-- Background Image with Dark Overlay -->
+        <div class="loading-overlay"></div>
+        
+        <!-- Main Loader Content -->
+        <div class="text-center relative z-10 px-4 text-white">
+            <!-- Spinner -->
+            <div class="spinner mx-auto mb-6"></div>
+            
+            <!-- Typewriter Title -->
+            <h3 id="typewriter" class="text-2xl font-bold text-white mb-6"></h3>
+            
+            <!-- Animated Loading Phrase -->
+            <div class="flex flex-wrap justify-center gap-x-2 text-xl font-medium text-white">
+                <span class="fade-word delay-[0ms]">News</span>
+                <span class="fade-word delay-[300ms]">loading.</span>
+                <span class="fade-word delay-[600ms]">Stories</span>
+                <span class="fade-word delay-[900ms]">breaking.</span>
+                <span class="fade-word delay-[1200ms]">Updates</span>
+                <span class="fade-word delay-[1500ms]">coming in.</span>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="w-64 h-2 bg-gray-300 rounded-full mt-8 mx-auto overflow-hidden">
+                <div id="loading-progress" class="h-full bg-white rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
     </div>
-  </div>
 
     <!-- Notification -->
     <div class="notification" id="notification">
@@ -679,40 +700,91 @@
             mirror: true
         });
 
-        // Loading Screen
-        window.addEventListener('load', () => {
-      const loader = document.getElementById('loading');
-      const progressBar = document.getElementById('loading-progress');
-
-      // Animate progress bar
-      let width = 0;
-      const progress = setInterval(() => {
-        if (width >= 100) {
-          clearInterval(progress);
-          loader.style.opacity = '0';
-          loader.style.pointerEvents = 'none';
-          setTimeout(() => loader.style.display = 'none', 500);
-        } else {
-          width += 1;
-          progressBar.style.width = width + '%';
-        }
-      }, 10); // speed of progress bar
-
-      // Typewriter effect
-      const typewriter = document.getElementById('typewriter');
-      const message = "Bringing You the Latest Headlines...";
-      let i = 0;
-
-      function type() {
-        if (i < message.length) {
-          typewriter.textContent += message.charAt(i);
-          i++;
-          setTimeout(type, 60);
-        }
-      }
-
-      type();
-    });
+        // Loading Screen Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loading');
+            const progressBar = document.getElementById('loading-progress');
+            const typewriter = document.getElementById('typewriter');
+            
+            // Enhanced Typewriter effect with multiple messages
+            const messages = [
+                "Fetching Breaking News...",
+                "Loading School Updates...",
+                "Preparing Your Dashboard...",
+                "Analyzing Latest Trends...",
+                "Almost There..."
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 50; // Faster typing speed
+            let pauseBetweenMessages = 1500; // Pause before next message
+            
+            function type() {
+                const currentMessage = messages[messageIndex];
+                
+                if (isDeleting) {
+                    // Deleting characters
+                    typewriter.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                    typingSpeed = 30; // Faster delete speed
+                } else {
+                    // Typing characters
+                    typewriter.textContent = currentMessage.substring(0, charIndex + 1);
+                    charIndex++;
+                    typingSpeed = charIndex % 3 === 0 ? 100 : 50; // Variable typing speed for natural feel
+                }
+                
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    // Pause at end of message
+                    typingSpeed = pauseBetweenMessages;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    // Move to next message
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    typingSpeed = 500; // Pause before starting next message
+                }
+                
+                setTimeout(type, typingSpeed);
+            }
+            
+            // Start enhanced typewriter effect
+            type();
+            
+            // Animate progress bar
+            let width = 0;
+            const progress = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(progress);
+                    // Transition out after both animations complete
+                    setTimeout(() => {
+                        loader.classList.add('hide');
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                } else {
+                    width += 2; // Increased speed
+                    progressBar.style.width = width + '%';
+                }
+            }, 30); // Adjusted speed of progress bar
+            
+            // Animate fade-in words
+            const fadeWords = document.querySelectorAll('.fade-word');
+            fadeWords.forEach(word => {
+                const delay = word.classList.contains('delay-[0ms]') ? 0 :
+                              word.classList.contains('delay-[300ms]') ? 300 :
+                              word.classList.contains('delay-[600ms]') ? 600 :
+                              word.classList.contains('delay-[900ms]') ? 900 :
+                              word.classList.contains('delay-[1200ms]') ? 1200 : 1500;
+                
+                setTimeout(() => {
+                    word.style.opacity = '1';
+                    word.style.transform = 'translateY(0)';
+                }, delay);
+            });
+        });
 
         // Mobile Menu Toggle
         const mobileMenu = document.getElementById('mobileMenu');
