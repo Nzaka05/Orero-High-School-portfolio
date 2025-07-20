@@ -203,46 +203,85 @@
             opacity: 1;
             transform: translateX(0);
         }
-        .loading-overlay {
-    background-image: url('/images/aerial/usambara.jpg'); /* Change to your actual path */
-    background-size: cover;
-    background-position: center;
-    opacity: 0.8;
-}
+         /* Background Image Styling */
+    .loading-overlay {
+      background-image: url('/images/aerial/usambara.jpg'); /* 🔁 Change to your image path */
+      background-size: cover;
+      background-position: center;
+      opacity: 0.8;
+    }
+
+    /* Fade-In Word Animation */
+    .fade-word {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    .fade-word.delay-\[0ms\] { animation-delay: 0ms; }
+    .fade-word.delay-\[300ms\] { animation-delay: 300ms; }
+    .fade-word.delay-\[600ms\] { animation-delay: 600ms; }
+    .fade-word.delay-\[900ms\] { animation-delay: 900ms; }
+    .fade-word.delay-\[1200ms\] { animation-delay: 1200ms; }
+    .fade-word.delay-\[1500ms\] { animation-delay: 1500ms; }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Typewriter Blinking Cursor */
+    #typewriter::after {
+      content: '|';
+      animation: blink 1s infinite;
+      color: white;
+      margin-left: 4px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
 
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Loading Screen -->
-    <!-- News & Updates Loading Screen -->
-<div id="loading" class="loading fixed inset-0 z-[9999] flex items-center justify-center loading-screen">
-    <!-- Background Image Overlay -->
-    <div class="absolute inset-0 loading-overlay"></div>
+     <!-- News & Updates Loading Screen -->
+  <div id="loading" class="fixed inset-0 z-[9999] flex items-center justify-center loading-screen">
     
-    <!-- Main Content -->
+    <!-- Background Overlay -->
+    <div class="absolute inset-0 loading-overlay"></div>
+
+    <!-- Main Loader Content -->
     <div class="text-center relative z-10 px-4">
-        <!-- Spinner -->
-        <div class="w-16 h-16 border-4 border-red-400 border-t-transparent rounded-full loading-spinner mx-auto mb-6 animate-spin"></div>
-        
-        <!-- Title -->
-        <h3 class="text-2xl font-bold text-white mb-6 loading-text">Bringing You the Latest Headlines...</h3>
-        
-        <!-- Fancier Animated Phrase -->
-        <div class="flex flex-wrap justify-center gap-x-2 text-xl font-medium text-white loading-phrase">
-            <span class="animate-fade-in delay-300">News</span>
-            <span class="animate-fade-in delay-600">loading.</span>
-            <span class="animate-fade-in delay-900">Stories</span>
-            <span class="animate-fade-in delay-1200">breaking.</span>
-            <span class="animate-fade-in delay-1500">Updates</span>
-            <span class="animate-fade-in delay-1800">coming in.</span>
-        </div>
-        
-        <!-- Progress Bar -->
-        <div class="w-64 h-2 bg-gray-300 rounded-full mt-8 mx-auto overflow-hidden">
-            <div id="loading-progress" class="h-full bg-red-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-        </div>
+      <!-- Spinner -->
+      <div class="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+
+      <!-- Typewriter Title -->
+      <h3 id="typewriter" class="text-2xl font-bold text-white mb-6 whitespace-nowrap"></h3>
+
+      <!-- Animated Loading Phrase -->
+      <div class="flex flex-wrap justify-center gap-x-2 text-xl font-medium text-white loading-phrase">
+        <span class="fade-word delay-[0ms]">News</span>
+        <span class="fade-word delay-[300ms]">loading.</span>
+        <span class="fade-word delay-[600ms]">Stories</span>
+        <span class="fade-word delay-[900ms]">breaking.</span>
+        <span class="fade-word delay-[1200ms]">Updates</span>
+        <span class="fade-word delay-[1500ms]">coming in.</span>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="w-64 h-2 bg-gray-300 rounded-full mt-8 mx-auto overflow-hidden">
+        <div id="loading-progress" class="h-full bg-red-500 rounded-full" style="width: 0%"></div>
+      </div>
     </div>
-</div>
+  </div>
 
     <!-- Notification -->
     <div class="notification" id="notification">
@@ -646,6 +685,39 @@
                 document.getElementById('loading').classList.add('hide');
             }, 1500);
         });
+        window.addEventListener('load', () => {
+      const loader = document.getElementById('loading');
+      const progressBar = document.getElementById('loading-progress');
+
+      // Animate progress bar
+      let width = 0;
+      const progress = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(progress);
+          loader.style.opacity = '0';
+          loader.style.pointerEvents = 'none';
+          setTimeout(() => loader.style.display = 'none', 500);
+        } else {
+          width += 1;
+          progressBar.style.width = width + '%';
+        }
+      }, 10); // speed of progress bar
+
+      // Typewriter effect
+      const typewriter = document.getElementById('typewriter');
+      const message = "Bringing You the Latest Headlines...";
+      let i = 0;
+
+      function type() {
+        if (i < message.length) {
+          typewriter.textContent += message.charAt(i);
+          i++;
+          setTimeout(type, 60);
+        }
+      }
+
+      type();
+    });
 
         // Mobile Menu Toggle
         const mobileMenu = document.getElementById('mobileMenu');
