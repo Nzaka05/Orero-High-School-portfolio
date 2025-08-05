@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orero High School - Alumni Stories</title>
+    
+    <!-- CDN Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-navy: #1a2332;
+            --secondary-navy: #2d3748;
+            --gold: #f59e0b;
+            --orange: #ea580c;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Glassmorphism Effects */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px 0 rgba(31, 38, 135, 0.5);
+            border-color: var(--gold);
+        }
+
+        /* Hero Background */
+        .hero-bg {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 50%, #4a5568 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="50" cy="10" r="0.8" fill="rgba(255,255,255,0.12)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
+        }
+
+        /* Animated Gradient Button */
+        .gradient-btn {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            border: none;
+            border-radius: 50px;
+            padding: 15px 40px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gradient-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .gradient-btn:hover::before {
+            left: 100%;
+        }
+
+        .gradient-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            transform: translateY(var(--scroll-y, 0));
+        }
+
+        /* Profile Image Placeholder */
+        .profile-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            color: white;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--gold);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-bg {
+                padding: 60px 20px;
+            }
+            
+            .glass-card {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Floating Animation */
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        /* Glow Effect */
+        .glow {
+            box-shadow: 0 0 20px var(--gold);
+        }
+         /* Micro animations */
+  @keyframes icon-bounce {
+    0%   { transform: translateY(0); }
+    40%  { transform: translateY(-4px); }
+    60%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes menu-fade-slide {
+    0%   { opacity: 0; transform: translateY(8px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+
+  /* Classes toggled by JS */
+  .menu-open {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+    pointer-events: auto !important;
+    animation: menu-fade-slide 220ms cubic-bezier(.2,.9,.3,1);
+  }
+
+  .icon-bouncing {
+    animation: icon-bounce 1800ms infinite;
+    transform-origin: center;
+  }
+
+  /* small tweak so the wrapper area is slightly larger for pointerenter on desktop */
+  #home-dropdown-wrapper { padding: 4px; border-radius: 6px; }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-card m-4 px-6 py-4">
+  <div class="flex justify-between items-center relative">
+    <!-- Logo & School Name -->
+    <div class="flex items-center space-x-3">
+      <!-- Replace src with your actual logo path -->
+      <img src="images/logo.png" alt="Orero High School Logo" class="w-12 h-12 object-contain">
+      <div>
+        <h1 class="serif-font font-bold text-lg">ORERO HIGH SCHOOL</h1>
+        <p class="text-xs text-gray-300">The Lion Never Sleeps</p>
+      </div>
+    </div>
+
+    <!-- Home Dropdown -->
+    <div id="home-dropdown-wrapper" class="relative">
+      <!-- Home Icon (Dropdown Trigger) -->
+      <button id="home-dropdown-btn"
+              aria-haspopup="true"
+              aria-expanded="false"
+              class="text-yellow-500 hover:text-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded-md p-2"
+              title="Menu">
+        <i id="home-icon" class="fas fa-home text-xl"></i>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="home-dropdown"
+           class="absolute right-0 mt-2 w-44 glass-card rounded-lg shadow-lg transform opacity-0 translate-y-2 scale-98 pointer-events-none"
+           role="menu"
+           aria-label="Main pages">
+        <a href="index.html" class="block px-4 py-2 hover:bg-yellow-500/20" role="menuitem">Home</a>
+        <a href="about.html" class="block px-4 py-2 hover:bg-yellow-500/20" role="menuitem">About</a>
+        <a href="academics.html" class="block px-4 py-2 hover:bg-yellow-500/20" role="menuitem">Academics</a>
+        <a href="gallery.html" class="block px-4 py-2 hover:bg-yellow-500/20" role="menuitem">Gallery</a>
+        <a href="news.html" class="block px-4 py-2 hover:bg-yellow-500/20" role="menuitem">News</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center text-center px-4 pt-20 bg-gradient-to-b from-gray-900 via-gray-800 to-black overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0">
+        <img src="hero.jpg" 
+             alt="Alumni Gathering" 
+             class="w-full h-full object-cover opacity-30">
+    </div>
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+
+    <!-- Glass Card with its own background -->
+    <div class="relative z-10 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <div class="relative glass-card p-12 rounded-2xl overflow-hidden">
+            <!-- Card Background Image -->
+            <div class="absolute inset-0">
+                <img src="hero.jpg"
+                     alt="Alumni Memories"
+                     class="w-full h-full object-cover opacity-20">
+            </div>
+            <!-- Card Overlay to keep text readable -->
+            <div class="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+
+            <!-- Card Content -->
+            <div class="relative z-10">
+                <div class="floating mb-6">
+                    <i class="fas fa-users text-6xl text-yellow-500"></i>
+                </div>
+                <h1 class="serif-font text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent drop-shadow-lg">
+                    Where Are They Now?
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed">
+                    Discover the inspiring journeys of <span class="font-semibold text-yellow-400">Orero High School</span> alumni as they make their mark across the globe.
+                    From CEOs to doctors, teachers to entrepreneurs, our graduates continue to embody excellence wherever they go.
+                </p>
+                  <!-- Fun Facts -->
+                <div class="mt-8 text-yellow-300 text-lg italic animate-pulse">
+                    <span id="fun-fact">"Over 95% of Orero alumni pursue higher education."</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Alumni Showcase -->
+    <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="serif-font text-4xl md:text-5xl font-bold mb-4">
+                    <i class="fas fa-star text-yellow-500 mr-3"></i>
+                    Alumni Spotlight
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Meet some of our distinguished graduates who are making a difference in their communities and industries worldwide.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Alumni Card 1 -->
+                <div class="glass-card p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="profile-placeholder mx-auto mb-6">
+                        <span>AL</span>
+                    </div>
+                    <h3 class="serif-font text-2xl font-bold mb-2">Dr. Aran Lloyd</h3>
+                    <p class="text-yellow-500 font-semibold mb-1">Class of 2008</p>
+                    <p class="text-gray-300 mb-4">Neurosurgeon, Johns Hopkins Hospital</p>
+                    <p class="text-gray-400 mb-6 italic">
+                        "Orero High taught me that excellence isn't just about grades—it's about character, perseverance, and serving others with humility."
+                    </p>
+                    <button class="gradient-btn text-sm" onclick="openModal('maria')">
+                        <i class="fas fa-book-open mr-1"></i>
+                        Read More
+                    </button>
+                </div>
+
+                <!-- Alumni Card 2 -->
+                <div class="glass-card p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="profile-placeholder mx-auto mb-6">
+                        <span>JK</span>
+                    </div>
+                    <h3 class="serif-font text-2xl font-bold mb-2">James Kiprop</h3>
+                    <p class="text-yellow-500 font-semibold mb-1">Class of 2003</p>
+                    <p class="text-gray-300 mb-4">CEO, GreenTech Solutions Kenya</p>
+                    <p class="text-gray-400 mb-6 italic">
+                        "The discipline and innovation mindset I learned at Orero High became the foundation for building Africa's leading renewable energy company."
+                    </p>
+                    <button class="gradient-btn text-sm" onclick="openModal('james')">
+                        <i class="fas fa-book-open mr-1"></i>
+                        Read More
+                    </button>
+                </div>
+
+                <!-- Alumni Card 3 -->
+                <div class="glass-card p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="profile-placeholder mx-auto mb-6">
+                        <span>CA</span>
+                    </div>
+                    <h3 class="serif-font text-2xl font-bold mb-2">Charles Abuor</h3>
+                    <p class="text-yellow-500 font-semibold mb-1">Class of 2012</p>
+                    <p class="text-gray-300 mb-4">UN Youth Ambassador, Geneva</p>
+                    <p class="text-gray-400 mb-6 italic">
+                        "Orero High's motto 'Unity, Faith, Discipline' guides everything I do in advocating for young people on the global stage."
+                    </p>
+                    <button class="gradient-btn text-sm" onclick="openModal('aisha')">
+                        <i class="fas fa-book-open mr-1"></i>
+                        Read More
+                    </button>
+                </div>
+
+                <!-- Alumni Card 4 -->
+                <div class="glass-card p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="profile-placeholder mx-auto mb-6">
+                        <span>PW</span>
+                    </div>
+                    <h3 class="serif-font text-2xl font-bold mb-2">Peter Wanjiku</h3>
+                    <p class="text-yellow-500 font-semibold mb-1">Class of 1995</p>
+                    <p class="text-gray-300 mb-4">Mathematics Professor, MIT</p>
+                    <p class="text-gray-400 mb-6 italic">
+                        "The rigorous academic environment at Orero High prepared me for the challenges of pursuing advanced mathematics at the highest level."
+                    </p>
+                    <button class="gradient-btn text-sm" onclick="openModal('peter')">
+                        <i class="fas fa-book-open mr-1"></i>
+                        Read More
+                    </button>
+                </div>
+
+                <!-- Alumni Card 5 -->
+                <div class="glass-card p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="profile-placeholder mx-auto mb-6">
+                        <span>GN</span>
+                    </div>
+                    <h3 class="serif-font text-2xl font-bold mb-2">Martin Akoko</h3>
+                    <p class="text-yellow-500 font-semibold mb-1">Class of 2010</p>
+                    <p class="text-gray-300 mb-4">Film Director, Hollywood</p>
+                    <p class="text-gray-400 mb-6 italic">
+                        "Orero High's arts program ignited my passion for storytelling. Today, I tell African stories to the world through cinema."
+                    </p>
+                    <button class="gradient-btn text-sm" onclick="openModal('grace')">
+                        <i class="fas fa-book-open mr-1"></i>
+                        Read More
+                    </button>
+                </div>
+
+                <!-- Alumni Card 6 -->
+                <div class="glass-card p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="profile-placeholder mx-auto mb-6">
+                        <span>RO</span>
+                    </div>
+                    <h3 class="serif-font text-2xl font-bold mb-2">Robert Ouma</h3>
+                    <p class="text-yellow-500 font-semibold mb-1">Class of 2006</p>
+                    <p class="text-gray-300 mb-4">Olympic Marathon Champion</p>
+                    <p class="text-gray-400 mb-6 italic">
+                        "The athletic discipline and mental toughness I developed at Orero High carried me all the way to Olympic gold."
+                    </p>
+                    <button class="gradient-btn text-sm" onclick="openModal('robert')">
+                        <i class="fas fa-book-open mr-1"></i>
+                        Read More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Articles Section -->
+    <section class="py-20 px-4 bg-gradient-to-b from-transparent to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="serif-font text-4xl md:text-5xl font-bold mb-4">
+                    <i class="fas fa-newspaper text-yellow-500 mr-3"></i>
+                    Featured Stories
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    In-depth stories of triumph, innovation, and leadership from our distinguished alumni community.
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Article 1 -->
+                <article class="glass-card p-8 md:p-12" data-aos="fade-right">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-32 h-32 profile-placeholder text-4xl flex-shrink-0">
+                            <span>AL</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="serif-font text-3xl font-bold mb-2">From Homa Bay to Johns Hopkins</h3>
+                            <p class="text-yellow-500 font-semibold mb-4">Dr. Aran Lloyd's Journey to Neurosurgery Excellence</p>
+                            <p class="text-gray-300 leading-relaxed mb-6">
+                                Growing up in rural Homa Bay, Dr. Aran Lloyd never imagined he would one day perform life-saving brain surgeries at one of America's most prestigious hospitals. His journey began at Orero High School, where dedicated teachers recognized his potential and nurtured his love for science. "Mrs. Kemunto, my biology teacher, stayed after school every day to help me with extra lessons," recalls Dr. Lloyd. "She saw something in me that I didn't even see in myself." Today, as one of the few African male neurosurgeons in the United States, Dr. Lloyd has performed over 500 successful brain surgeries and established a foundation that provides medical scholarships for girls and boys from rural Kenya.
+                            </p>
+                            <a href="#" class="text-yellow-500 hover:text-yellow-400 font-semibold">
+                                Continue Reading <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="glass-card p-8 md:p-12" data-aos="fade-left">
+                    <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+                        <div class="w-32 h-32 profile-placeholder text-4xl flex-shrink-0">
+                            <span>JK</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="serif-font text-3xl font-bold mb-2">Powering Africa's Green Future</h3>
+                            <p class="text-yellow-500 font-semibold mb-4">How James Kiprop Built Kenya's Leading Renewable Energy Company</p>
+                            <p class="text-gray-300 leading-relaxed mb-6">
+                                In 2015, James Kiprop noticed that his grandmother in rural Migori still relied on kerosene lamps for lighting. This observation sparked an idea that would eventually become GreenTech Solutions Kenya, now the country's fastest-growing solar energy company. "At Orero High, we learned that innovation comes from identifying real problems and applying disciplined thinking to solve them," says Kiprop. Starting with a small loan and a deep understanding of rural energy needs, he developed affordable solar solutions specifically designed for rural African communities. Today, GreenTech Solutions has brought clean energy to over 200,000 households across East Africa and employs more than 500 people, with 60% being women from rural communities.
+                            </p>
+                            <a href="#" class="text-yellow-500 hover:text-yellow-400 font-semibold">
+                                Continue Reading <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="glass-card p-8 md:p-12" data-aos="fade-up">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-32 h-32 profile-placeholder text-4xl flex-shrink-0">
+                            <span>CA</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="serif-font text-3xl font-bold mb-2">A Voice for Global Youth</h3>
+                            <p class="text-yellow-500 font-semibold mb-4">Charles Abuor Champions Young People at the United Nations</p>
+                            <p class="text-gray-300 leading-relaxed mb-6">
+                                When Charles Abuor speaks at the United Nations headquarters in Geneva, world leaders listen. As the youngest person ever appointed as UN Youth Ambassador, he represents the voices of over 1.8 billion young people globally. His path to this prestigious role began in the debate club at Orero High School. "Our school taught us that every voice matters, regardless of where you come from," reflects Charles. "That confidence gave me the courage to speak truth to power on the global stage." He has successfully advocated for increased youth representation in climate change negotiations and spearheaded initiatives that have created over 10,000 youth employment opportunities across Africa.
+                            </p>
+                            <a href="#" class="text-yellow-500 hover:text-yellow-400 font-semibold">
+                                Continue Reading <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+<section id="alumni-form" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+        <div class="glass-card p-12 glow" data-aos="zoom-in">
+            <div class="floating mb-8">
+                <i class="fas fa-pen-fancy text-5xl text-yellow-500"></i>
+            </div>
+            <h2 class="serif-font text-4xl md:text-5xl font-bold mb-6">
+                Do You Have a Story to Tell?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                Your journey matters. Whether you're leading a Fortune 500 company, teaching in a rural school, or pursuing your dreams in any field, we want to celebrate your achievements and inspire current students with your story.
+            </p>
+            <div class="space-y-4 md:space-y-0 md:space-x-6 md:flex md:justify-center md:items-center">
+                <a href="https://forms.gle/XrkDb2Y66NAmMT1t6" target="_blank" class="gradient-btn text-lg inline-block">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    Submit Your Alumni Story
+                </a>
+                <p class="text-gray-400 text-sm">
+                    <i class="fas fa-clock mr-1"></i>
+                    Takes only 5 minutes
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-gray-700">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="serif-font text-2xl font-bold text-yellow-500">ORERO HIGH SCHOOL</h3>
+                    <p class="text-gray-400">Excellence in Education Since 1968</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-gray-400">
+                <p>&copy; 2025 Orero High School. All rights reserved. | Unity, Faith, Discipline</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="alumniModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 100
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.parallax');
+            const speed = 0.5;
+
+            parallax.forEach(element => {
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+
+        const facts = [
+    `"Over 95% of Orero alumni pursue higher education."`,
+    `"Our alumni network spans 30+ countries."`,
+    `"The Class of 2005 produced 4 CEOs."`,
+    `"One alumnus was part of a NASA project team."`
+];
+let index = 0;
+setInterval(() => {
+    index = (index + 1) % facts.length;
+    document.getElementById("fun-fact").textContent = facts[index];
+}, 4000);
+
+(function () {
+    const wrapper = document.getElementById('home-dropdown-wrapper');
+    const btn = document.getElementById('home-dropdown-btn');
+    const menu = document.getElementById('home-dropdown');
+    const icon = document.getElementById('home-icon');
+
+    let isOpen = false;
+    let pointerInside = false;
+    let hoverMode = false; // true if desktop-like (hover available & pointer fine)
+
+    // Detect devices that support hover + fine pointer (traditional desktops)
+    // If true -> use hover-to-open behavior in addition to click.
+    try {
+      hoverMode = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    } catch (e) {
+      hoverMode = false;
+    }
+
+    // For hybrid devices (touchscreen laptops) matchMedia may be true.
+    // We'll treat hoverMode true as "allow hover open", but still always keep click/tap toggling available.
+    // Initial icon idle bounce: only bounce when closed so it draws subtle attention
+    function updateIconBounce() {
+      if (!isOpen) icon.classList.add('icon-bouncing');
+      else icon.classList.remove('icon-bouncing');
+    }
+    updateIconBounce();
+
+    // Open/Close helpers
+    function openMenu() {
+      if (isOpen) return;
+      menu.classList.add('menu-open');
+      menu.classList.remove('opacity-0', 'translate-y-2', 'scale-98', 'pointer-events-none');
+      btn.setAttribute('aria-expanded', 'true');
+      isOpen = true;
+      updateIconBounce();
+    }
+    function closeMenu() {
+      if (!isOpen) return;
+      // remove menu-open then force back to hidden state
+      menu.classList.remove('menu-open');
+      menu.classList.add('opacity-0', 'translate-y-2', 'scale-98', 'pointer-events-none');
+      btn.setAttribute('aria-expanded', 'false');
+      isOpen = false;
+      updateIconBounce();
+    }
+    function toggleMenu() {
+      isOpen ? closeMenu() : openMenu();
+    }
+
+    // Click toggles — works for mobile & desktop clicks
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Desktop hover behavior: open when pointer enters wrapper, close when leaves
+    // Only attach hover listeners if hoverMode true (pointer: fine & hover: hover)
+    if (hoverMode) {
+      wrapper.addEventListener('pointerenter', () => {
+        pointerInside = true;
+        openMenu();
+      });
+      wrapper.addEventListener('pointerleave', () => {
+        pointerInside = false;
+        // small debounce so moving between button/menu doesn't flicker
+        setTimeout(() => {
+          if (!pointerInside) closeMenu();
+        }, 120);
+      });
+    } else {
+      // If hoverMode is false (touch-first), make sure we don't accidentally bounce icon too much
+      // keep click behavior only; touch users will tap to open/close
+    }
+
+    // For hybrid devices that both report hover and also have touch, the logic above still allows tap/click to toggle.
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!wrapper.contains(e.target)) closeMenu();
+    });
+
+    // Keyboard accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    // Keep menu open while focus is inside wrapper
+    wrapper.addEventListener('focusin', () => openMenu());
+    wrapper.addEventListener('focusout', (e) => {
+      if (!wrapper.contains(e.relatedTarget)) closeMenu();
+    });
+
+    // Ensure initial hidden state classes are set (Tailwind reset)
+    menu.classList.add('opacity-0', 'translate-y-2', 'scale-98', 'pointer-events-none');
+
+    // If device can hover, remove bouncing after a little while of inactivity (so it isn't distracting)
+    if (hoverMode) {
+      setTimeout(() => icon.classList.remove('icon-bouncing'), 4000);
+    }
+
+    // Prevent accidental double-open when user both hovers and clicks quickly:
+    // If hoverMode is true, and menu was opened by hover, clicking the button should toggle normally.
+    // The code above already handles that via isOpen state.
+
+  })();
+  
+        // Modal functionality
+        const modalData = {
+            Aran: {
+                title: "Dr. Aran Lloyd - Full Story",
+                content: `
+                    <div class="text-center mb-6">
+                        <div class="profile-placeholder mx-auto mb-4">
+                            <span>AL</span>
+                        </div>
+                        <h3 class="serif-font text-2xl font-bold">Dr. Aran Lloyd</h3>
+                        <p class="text-yellow-500">Class of 2008 | Neurosurgeon, Johns Hopkins Hospital</p>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Dr. Aran Lloyd's journey from a small village in Homa Bay to becoming one of the leading neurosurgeons at Johns Hopkins Hospital is nothing short of extraordinary. Born to a family of farmers, Lloyd showed exceptional academic promise from an early age.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        At Orero High School, he excelled in science subjects and participated actively in the school's debate club and science fair competitions. Her biology teacher, Mrs. Kemunto, recognized her potential and provided extra mentorship that proved crucial in shaping his career path.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        After graduating as the valedictorian of his class, Aran earned a scholarship to study medicine at the University of Nairobi. He later pursued his specialization in neurosurgery at Harvard Medical School, where he graduated magna cum laude.
+                    </p>
+                    <p class="text-gray-300">
+                        Today, Dr. Lloyd has performed over 500 successful brain surgeries and has published numerous research papers on innovative surgical techniques. He also runs a foundation that provides medical scholarships to underprivileged girls from rural Kenya.
+                    </p>
+                `
+            },
+            james: {
+                title: "James Kiprop - Full Story",
+                content: `
+                    <div class="text-center mb-6">
+                        <div class="profile-placeholder mx-auto mb-4">
+                            <span>JK</span>
+                        </div>
+                        <h3 class="serif-font text-2xl font-bold">James Kiprop</h3>
+                        <p class="text-yellow-500">Class of 2003 | CEO, GreenTech Solutions Kenya</p>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        James Kiprop's entrepreneurial journey began during his time at Orero High School, where he was known for his innovative thinking and problem-solving abilities. As the captain of the school's robotics club, James developed a passion for technology and its potential to solve real-world problems.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        After completing his engineering degree at the University of Nairobi, James worked for several multinational companies before deciding to start his own venture. The inspiration came from witnessing the energy challenges faced by his rural community.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        In 2015, he founded GreenTech Solutions Kenya with a mission to provide affordable, sustainable energy solutions to rural African communities. Starting with just three employees and a small loan, the company has grown exponentially.
+                    </p>
+                    <p class="text-gray-300">
+                        Today, GreenTech Solutions Kenya has brought clean energy to over 200,000 households across East Africa, created employment for more than 500 people, and won numerous international awards for innovation and social impact.
+                    </p>
+                `
+            },
+            Charles: {
+                title: "Charles Abuor - Full Story",
+                content: `
+                    <div class="text-center mb-6">
+                        <div class="profile-placeholder mx-auto mb-4">
+                            <span>CA</span>
+                        </div>
+                        <h3 class="serif-font text-2xl font-bold">Charles Abuor</h3>
+                        <p class="text-yellow-500">Class of 2012 | UN Youth Ambassador, Geneva</p>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Charles Abuor's passion for advocacy and social justice was evident from her school days at Orero High. As the head of the debate club and student council president, he demonstrated exceptional leadership skills and a deep commitment to representing his peers' interests.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        His eloquence and dedication to youth issues caught the attention of several international organizations during her university years at Oxford, where he studied International Relations and Development Studies.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        At just 25, Charles was appointed as the UN Youth Ambassador, making him the youngest person ever to hold this prestigious position. In this role, he represents the voices of over 1.8 billion young people globally in various UN forums and initiatives.
+                    </p>
+                    <p class="text-gray-300">
+                        His advocacy work has led to significant policy changes in youth employment, climate action, and educational access. He has successfully lobbied for increased youth representation in international climate negotiations and has been instrumental in creating over 10,000 youth employment opportunities across Africa.
+                    </p>
+                `
+            },
+            peter: {
+                title: "Peter Wanjiku - Full Story",
+                content: `
+                    <div class="text-center mb-6">
+                        <div class="profile-placeholder mx-auto mb-4">
+                            <span>PW</span>
+                        </div>
+                        <h3 class="serif-font text-2xl font-bold">Peter Wanjiku</h3>
+                        <p class="text-yellow-500">Class of 1995 | Mathematics Professor, MIT</p>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Professor Peter Wanjiku's love for mathematics began at Orero High School, where he was mentored by Mr. Ogola, a passionate mathematics teacher who recognized Peter's exceptional analytical abilities. Peter consistently scored perfect marks in mathematics and represented the school in national mathematics competitions.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        After graduating as the top mathematics student, Peter earned a scholarship to study at Cambridge University, where he completed his undergraduate and doctoral studies in Pure Mathematics. His doctoral thesis on algebraic topology earned international recognition.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        Professor Wanjiku joined MIT in 2005 and has since become one of the world's leading researchers in his field. His work on advanced mathematical modeling has applications in quantum physics and computer science.
+                    </p>
+                    <p class="text-gray-300">
+                        He has published over 60 research papers, authored three textbooks, and received numerous prestigious awards including the Fields Medal nomination. He also mentors young mathematicians from Africa through his scholarship program.
+                    </p>
+                `
+            },
+            Martin: {
+                title: "Martin Akoko - Full Story",
+                content: `
+                    <div class="text-center mb-6">
+                        <div class="profile-placeholder mx-auto mb-4">
+                            <span>GN</span>
+                        </div>
+                        <h3 class="serif-font text-2xl font-bold">Martin Akoko</h3>
+                        <p class="text-yellow-500">Class of 2010 | Film Director, Hollywood</p>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Grace Nyong'o discovered her passion for storytelling during her time at Orero High School, where she actively participated in drama productions and founded the school's first film club. Her creative talents were nurtured by the school's vibrant arts program.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        After graduating, Grace pursued film studies at UCLA, where she honed her skills in cinematography and storytelling. Her student films received critical acclaim and won several awards at international student film festivals.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        Grace's breakthrough came with her directorial debut "Whispers of the Savanna," a powerful story about women's resilience in rural Africa. The film premiered at the Sundance Film Festival and received widespread critical acclaim.
+                    </p>
+                    <p class="text-gray-300">
+                        Today, Grace is one of Hollywood's most sought-after directors, known for her authentic portrayals of African stories. Her films have grossed over $500 million worldwide and have won numerous international awards. She is committed to telling African stories that celebrate the continent's rich culture and diversity.
+                    </p>
+                `
+            },
+            robert: {
+                title: "Robert Ouma - Full Story",
+                content: `
+                    <div class="text-center mb-6">
+                        <div class="profile-placeholder mx-auto mb-4">
+                            <span>RO</span>
+                        </div>
+                        <h3 class="serif-font text-2xl font-bold">Robert Ouma</h3>
+                        <p class="text-yellow-500">Class of 2006 | Olympic Marathon Champion</p>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Robert Ouma's journey to Olympic glory began on the dusty tracks of Orero High School, where his natural running talent was discovered by Coach Maina during a routine PE class. Despite having no proper running shoes, Robert's speed and endurance were immediately apparent.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        Under Coach Maina's guidance, Robert developed the discipline and mental toughness that would later become his trademark. He won every inter-school competition he entered and set several regional records while still in high school.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        After graduation, Robert joined the national athletics team and began training for international competitions. His dedication to training, often running over 200 kilometers per week, was legendary among his peers.
+                    </p>
+                    <p class="text-gray-300">
+                        Robert's crowning achievement came at the 2016 Olympics in Rio, where he won the marathon in a thrilling finish, breaking the Olympic record in the process. He has since established a foundation that supports young athletes from rural areas and built a state-of-the-art training facility in his hometown.
+                    </p>
+                `
+            }
+        };
+
+        function openModal(alumniId) {
+            const modal = document.getElementById('alumniModal');
+            const modalContent = document.getElementById('modalContent');
+            const data = modalData[alumniId];
+            
+            if (data) {
+                modalContent.innerHTML = `
+                    <h2 class="serif-font text-3xl font-bold mb-6 text-yellow-500">${data.title}</h2>
+                    ${data.content}
+                `;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('alumniModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('alumniModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.backgroundColor = 'rgba(26, 35, 50, 0.95)';
+            } else {
+                nav.style.backgroundColor = 'var(--glass-bg)';
+            }
+        });
+    </script>
+</body>
+</html>
